@@ -5,6 +5,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -14,7 +17,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.example.fundacionvalora02.dialogos.DialogoRecycler;
 import com.example.fundacionvalora02.recycler.MyRecyclerViewHolder;
 import com.example.fundacionvalora02.recycler.itemClickListener;
 import com.example.fundacionvalora02.utils.Alumno;
@@ -31,7 +33,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity implements DialogoRecycler.OnSingleDialogSelecter {
+public class MainActivity extends AppCompatActivity {
 
     RecyclerView recycler_view;
     EditText edit_nombre, edit_curso;
@@ -136,14 +138,25 @@ public class MainActivity extends AppCompatActivity implements DialogoRecycler.O
                     @Override
                     public void onClick(View view, int position) {
 
-                        DialogoRecycler dialogoRecycler = new DialogoRecycler();
-                        dialogoRecycler.show(getSupportFragmentManager(), "Aviso");
+                        final AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+                        builder.setTitle("¿Qué quieres hacer?");
+                        builder.setMessage("Si-Ver alumnos del módulo \nNo-Continuar en esta pantalla");
+                        builder.setPositiveButton("SI", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                Intent intent = new Intent(MainActivity.this, SecondActivity.class);
+                                startActivity(intent);
+                            }
+                        });
+                        builder.setNegativeButton("NO", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
 
-                        if (respuesta.equals("si")) {
+                            }
+                        });
 
-                        } else if (respuesta.equals("no")) {
-
-                        }
+                        builder.create();
+                        builder.show();
 
                         selected_modulo = model;
                         selected_key = getSnapshots().getSnapshot(position).getKey();
@@ -168,8 +181,4 @@ public class MainActivity extends AppCompatActivity implements DialogoRecycler.O
         recycler_view.setAdapter(adapter);
     }
 
-    @Override
-    public void onDataSingleSelecter(String s) {
-        respuesta = s;
-    }
 }
