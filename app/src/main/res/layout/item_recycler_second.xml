@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/text_item_nombre_alumno"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="10dp"
+        android:textSize="30sp"
+        android:textStyle="italic|bold"></TextView>
+
+    <TextView
+        android:id="@+id/text_item_apellidos_alumno"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="10dp"
+        android:textSize="20sp"
+        android:textStyle="italic"></TextView>
+
+    <TextView
+        android:id="@+id/text_item_numero_alumno"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="10dp"
+        android:textSize="15sp"></TextView>
+
+</LinearLayout>

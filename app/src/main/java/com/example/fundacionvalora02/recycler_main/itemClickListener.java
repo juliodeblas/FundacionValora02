@@ -1,4 +1,4 @@
-package com.example.fundacionvalora02.recycler;
+package com.example.fundacionvalora02.recycler_main;
 
 import android.view.View;
 

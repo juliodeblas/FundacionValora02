@@ -1,4 +1,4 @@
-package com.example.fundacionvalora02.recycler;
+package com.example.fundacionvalora02.recycler_main;
 
 import android.view.View;
 import android.widget.TextView;
@@ -11,7 +11,7 @@ import com.example.fundacionvalora02.R;
 public class MyRecyclerViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
     public TextView text_item_nombre, text_item_curso;
-    com.example.fundacionvalora02.recycler.itemClickListener itemClickListener;
+    com.example.fundacionvalora02.recycler_main.itemClickListener itemClickListener;
 
     public MyRecyclerViewHolder(@NonNull View itemView) {
         super(itemView);
@@ -21,7 +21,7 @@ public class MyRecyclerViewHolder extends RecyclerView.ViewHolder implements Vie
         itemView.setOnClickListener(this);
     }
 
-    public void setItemClickListener(com.example.fundacionvalora02.recycler.itemClickListener itemClickListener) {
+    public void setItemClickListener(com.example.fundacionvalora02.recycler_main.itemClickListener itemClickListener) {
         this.itemClickListener = itemClickListener;
     }
 

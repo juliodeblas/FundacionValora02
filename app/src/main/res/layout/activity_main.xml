@@ -56,6 +56,13 @@
                 android:hint="Curso académico (Ej: 19/20)"
                 android:textSize="15dp"></EditText>
 
+            <EditText
+                android:id="@+id/edit_id"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="ID del módulo"
+                android:textSize="15dp"></EditText>
+
         </LinearLayout>
 
         <LinearLayout

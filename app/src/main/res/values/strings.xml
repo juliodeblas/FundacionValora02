@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">Fundacion Valora</string>
+    <string name="TAG_LISTA_ALUMNOS">TAG_LISTA_ALUMNOS</string>
+    <string name="TAG_NOMBRE_MODULO">TAG_NOMBRE_MODULO</string>
+    <string name="TAG_CURSO_MODULO">TAG_CURSO_MODULO</string>
+    <string name="TAG_SELECTED_MODULO">TAG_SELECTED_MODULO</string>
+    <string name="TAG_SELECTED_KEY">TAG_SELECTED_KEY</string>
 </resources>

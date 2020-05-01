@@ -1,21 +1,21 @@
 {
   "project_info": {
-    "project_number": "1005309317934",
-    "firebase_url": "https://fundacionvalora02.firebaseio.com",
-    "project_id": "fundacionvalora02",
-    "storage_bucket": "fundacionvalora02.appspot.com"
+    "project_number": "304247247919",
+    "firebase_url": "https://fundacionvalora02-1d782.firebaseio.com",
+    "project_id": "fundacionvalora02-1d782",
+    "storage_bucket": "fundacionvalora02-1d782.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:1005309317934:android:e06abfcecb76168ac2a0bf",
+        "mobilesdk_app_id": "1:304247247919:android:c8d73e7e4f835f9d85a2da",
         "android_client_info": {
           "package_name": "com.example.fundacionvalora02"
         }
       },
       "oauth_client": [
         {
-          "client_id": "1005309317934-8gjufdlv124mcgkkst7hbdp8qd9e7ldk.apps.googleusercontent.com",
+          "client_id": "304247247919-7932vto6bdl9v6bannm9agv1se8chk12.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.example.fundacionvalora02",
@@ -23,20 +23,20 @@
           }
         },
         {
-          "client_id": "1005309317934-henmq7qh81fjgcp0efsnl4khtg1d6gj4.apps.googleusercontent.com",
+          "client_id": "304247247919-dg5gfbqo2toonetq72dq8ug4spb7eisj.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyBw2a29GDy16hZymBPMSWrMHcsGpVzfkoo"
+          "current_key": "AIzaSyBr8cT3eGie1hu2VURjULGgY0QidBJLTzU"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "1005309317934-henmq7qh81fjgcp0efsnl4khtg1d6gj4.apps.googleusercontent.com",
+              "client_id": "304247247919-dg5gfbqo2toonetq72dq8ug4spb7eisj.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

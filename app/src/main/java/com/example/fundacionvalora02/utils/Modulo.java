@@ -1,19 +1,19 @@
 package com.example.fundacionvalora02.utils;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Modulo {
+public class Modulo implements Serializable {
 
-    String nombre, curso;
-    ArrayList<Alumno> lista_alumnos;
+    String nombre, curso, id;
 
     public Modulo() {
     }
 
-    public Modulo(String nombre, String curso, ArrayList<Alumno> lista_alumnos) {
+    public Modulo(String nombre, String curso, String id) {
         this.nombre = nombre;
         this.curso = curso;
-        this.lista_alumnos = lista_alumnos;
+        this.id = id;
     }
 
     public String getNombre() {
@@ -32,11 +32,11 @@ public class Modulo {
         this.curso = curso;
     }
 
-    public ArrayList<Alumno> getLista_alumnos() {
-        return lista_alumnos;
+    public String getId() {
+        return id;
     }
 
-    public void setLista_alumnos(ArrayList<Alumno> lista_alumnos) {
-        this.lista_alumnos = lista_alumnos;
+    public void setId(String id) {
+        this.id = id;
     }
 }

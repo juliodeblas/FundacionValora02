@@ -17,8 +17,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.example.fundacionvalora02.recycler.MyRecyclerViewHolder;
-import com.example.fundacionvalora02.recycler.itemClickListener;
+import com.example.fundacionvalora02.recycler_main.MyRecyclerViewHolder;
+import com.example.fundacionvalora02.recycler_main.itemClickListener;
 import com.example.fundacionvalora02.utils.Alumno;
 import com.example.fundacionvalora02.utils.Modulo;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
@@ -36,7 +36,7 @@ import java.util.ArrayList;
 public class MainActivity extends AppCompatActivity {
 
     RecyclerView recycler_view;
-    EditText edit_nombre, edit_curso;
+    EditText edit_nombre, edit_curso, edit_id;
     Button button_crear, button_eliminar;
 
     FirebaseDatabase firebaseDatabase;
@@ -46,8 +46,7 @@ public class MainActivity extends AppCompatActivity {
     FirebaseRecyclerAdapter<Modulo, MyRecyclerViewHolder> adapter;
 
     Modulo selected_modulo;
-    String selected_key;
-    String respuesta = "";
+    String selected_key_modulo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,11 +60,12 @@ public class MainActivity extends AppCompatActivity {
         recycler_view.setLayoutManager(new LinearLayoutManager(this));
         edit_nombre = findViewById(R.id.edit_nombre);
         edit_curso = findViewById(R.id.edit_curso);
+        edit_id = findViewById(R.id.edit_id);
         button_crear = findViewById(R.id.button_crear);
         button_eliminar = findViewById(R.id.button_eliminar);
 
         firebaseDatabase = FirebaseDatabase.getInstance();
-        databaseReference = firebaseDatabase.getReference("FV-FIREBASE");
+        databaseReference = firebaseDatabase.getReference("modulos");
 
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
@@ -82,14 +82,18 @@ public class MainActivity extends AppCompatActivity {
         button_crear.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                crearModulo();
+                if (!edit_nombre.getText().toString().matches("") && !edit_curso.getText().toString().matches("")) {
+                    crearModulo();
+                } else {
+                    Toast.makeText(getApplicationContext(), "Debe introducir todos los datos", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
         button_eliminar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                databaseReference.child(selected_key).removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
+                databaseReference.child(selected_key_modulo).removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
                         Toast.makeText(MainActivity.this, "¡Borrado correctamente!", Toast.LENGTH_SHORT).show();
@@ -106,20 +110,14 @@ public class MainActivity extends AppCompatActivity {
         displayModulo();
     }
 
-    @Override
-    protected void onStop() {
-        if (adapter != null) {
-            adapter.stopListening();
-        }
-        super.onStop();
-    }
+
 
     private void crearModulo() {
         String nombre = edit_nombre.getText().toString();
         String curso = edit_curso.getText().toString();
-        ArrayList<Alumno> lista_alumnos = new ArrayList<Alumno>();
+        String id = edit_id.getText().toString();
 
-        Modulo modulo = new Modulo(nombre, curso, lista_alumnos);
+        Modulo modulo = new Modulo(nombre, curso, id);
 
         databaseReference.push().setValue(modulo);
 
@@ -130,7 +128,7 @@ public class MainActivity extends AppCompatActivity {
         options = new FirebaseRecyclerOptions.Builder<Modulo>().setQuery(databaseReference, Modulo.class).build();
         adapter = new FirebaseRecyclerAdapter<Modulo, MyRecyclerViewHolder>(options) {
             @Override
-            protected void onBindViewHolder(@NonNull MyRecyclerViewHolder holder, int position, @NonNull final Modulo model) {
+            protected void onBindViewHolder(@NonNull final MyRecyclerViewHolder holder, int position, @NonNull final Modulo model) {
                 holder.text_item_nombre.setText(model.getNombre());
                 holder.text_item_curso.setText(model.getCurso());
 
@@ -145,6 +143,8 @@ public class MainActivity extends AppCompatActivity {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 Intent intent = new Intent(MainActivity.this, SecondActivity.class);
+                                intent.putExtra(String.valueOf(R.string.TAG_SELECTED_KEY), selected_key_modulo);
+                                intent.putExtra(String.valueOf(R.string.TAG_SELECTED_MODULO), selected_modulo);
                                 startActivity(intent);
                             }
                         });
@@ -159,8 +159,8 @@ public class MainActivity extends AppCompatActivity {
                         builder.show();
 
                         selected_modulo = model;
-                        selected_key = getSnapshots().getSnapshot(position).getKey();
-                        Log.d("Key item", "" + selected_key);
+                        selected_key_modulo = getSnapshots().getSnapshot(position).getKey();
+                        Log.d("Key item", "" + selected_key_modulo);
 
                         edit_nombre.setText(model.getNombre());
                         edit_curso.setText(model.getCurso());
@@ -171,7 +171,7 @@ public class MainActivity extends AppCompatActivity {
             @NonNull
             @Override
             public MyRecyclerViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-                View view = LayoutInflater.from(getBaseContext()).inflate(R.layout.item_recycler, parent, false);
+                View view = LayoutInflater.from(getBaseContext()).inflate(R.layout.item_recycler_main, parent, false);
 
                 return new MyRecyclerViewHolder(view);
             }
