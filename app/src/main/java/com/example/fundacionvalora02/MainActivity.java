@@ -82,7 +82,7 @@ public class MainActivity extends AppCompatActivity {
         button_crear.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!edit_nombre.getText().toString().matches("") && !edit_curso.getText().toString().matches("")) {
+                if (!edit_nombre.getText().toString().matches("") && !edit_curso.getText().toString().matches("") && !edit_id.getText().toString().matches("")) {
                     crearModulo();
                 } else {
                     Toast.makeText(getApplicationContext(), "Debe introducir todos los datos", Toast.LENGTH_SHORT).show();
@@ -93,23 +93,45 @@ public class MainActivity extends AppCompatActivity {
         button_eliminar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                databaseReference.child(selected_key_modulo).removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void aVoid) {
-                        Toast.makeText(MainActivity.this, "¡Borrado correctamente!", Toast.LENGTH_SHORT).show();
-                    }
-                }).addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(MainActivity.this, "" + e.getMessage(), Toast.LENGTH_SHORT).show();
-                    }
-                });
+                if (selected_modulo != null) {
+                    AlertDialog.Builder dialog = new AlertDialog.Builder(MainActivity.this);
+                    dialog.setTitle("Confirmar eliminación");
+                    dialog.setMessage("¿Seguro que quieres continuar?");
+                    dialog.setPositiveButton("SI", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            databaseReference.child(selected_key_modulo).removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
+                                @Override
+                                public void onSuccess(Void aVoid) {
+                                    Toast.makeText(MainActivity.this, "¡Borrado correctamente!", Toast.LENGTH_SHORT).show();
+                                }
+                            }).addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    Toast.makeText(MainActivity.this, "" + e.getMessage(), Toast.LENGTH_SHORT).show();
+                                }
+                            });
+
+                        }
+                    }).setNegativeButton("NO", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+
+                        }
+                    });
+                    dialog.create();
+                    dialog.show();
+                } else {
+                    Toast.makeText(getApplicationContext(), "Debe seleccionar un módulo", Toast.LENGTH_SHORT).show();
+                }
+
             }
         });
 
+        selected_key_modulo = "null";
+        selected_modulo = null;
         displayModulo();
     }
-
 
 
     private void crearModulo() {
@@ -164,6 +186,7 @@ public class MainActivity extends AppCompatActivity {
 
                         edit_nombre.setText(model.getNombre());
                         edit_curso.setText(model.getCurso());
+                        edit_id.setText(model.getId());
                     }
                 });
             }

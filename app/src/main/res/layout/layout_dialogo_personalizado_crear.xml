@@ -52,7 +52,7 @@
         android:id="@+id/button_crear_dialogo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Añadir"
+        android:text="CREAR"
         android:layout_margin="10dp"/>
 
 </LinearLayout>

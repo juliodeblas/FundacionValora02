@@ -7,7 +7,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -17,7 +16,8 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.fundacionvalora02.dialogos.DialogoAlumno;
+import com.example.fundacionvalora02.dialogos.DialogoAlumnoActualizar;
+import com.example.fundacionvalora02.dialogos.DialogoAlumnoCrear;
 import com.example.fundacionvalora02.recycler_second.MyRecyclerViewHolder2;
 import com.example.fundacionvalora02.recycler_second.itemClickListener2;
 import com.example.fundacionvalora02.utils.Alumno;
@@ -32,7 +32,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-public class SecondActivity extends AppCompatActivity implements DialogoAlumno.OnDialogoPersoListener {
+public class SecondActivity extends AppCompatActivity implements DialogoAlumnoCrear.OnDialogoPersoListener, DialogoAlumnoActualizar.OnDialogoPersoListener {
 
     Bundle bundle;
     TextView text_alumnos_modulo;
@@ -49,8 +49,8 @@ public class SecondActivity extends AppCompatActivity implements DialogoAlumno.O
 
     String id_modulo;
 
-    Alumno selected_alumno;
-    String selected_key_alumno;
+    public static Alumno selected_alumno;
+    public static String selected_key_alumno;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,38 +59,71 @@ public class SecondActivity extends AppCompatActivity implements DialogoAlumno.O
         bundle = getIntent().getExtras();
         instancias();
         acciones();
+        System.out.println(selected_alumno);
+        System.out.println(selected_key_alumno);
     }
 
     private void acciones() {
         button_crear.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                DialogoAlumno dialogoAlumno = new DialogoAlumno();
+                DialogoAlumnoCrear dialogoAlumno = new DialogoAlumnoCrear();
                 dialogoAlumno.show(getSupportFragmentManager(), "perso");
             }
         });
         button_actualizar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                if (selected_alumno != null) {
+                    DialogoAlumnoActualizar dialogoAlumno = new DialogoAlumnoActualizar();
+                    dialogoAlumno.show(getSupportFragmentManager(), "perso");
+                } else {
+                    Toast.makeText(getApplicationContext(), "Debe seleccionar un alumno", Toast.LENGTH_SHORT).show();
+                }
             }
         });
         button_eliminar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                databaseReference.child(selected_key_alumno).removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void aVoid) {
-                        Toast.makeText(SecondActivity.this, "¡Borrado correctamente!", Toast.LENGTH_SHORT).show();
-                    }
-                }).addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(SecondActivity.this, "" + "Debe seleccionar un alumno", Toast.LENGTH_SHORT).show();
-                    }
-                });
+                if (selected_alumno != null) {
+                    AlertDialog.Builder dialog = new AlertDialog.Builder(SecondActivity.this);
+                    dialog.setTitle("Confirmar eliminación");
+                    dialog.setMessage("¿Seguro que quieres continuar?");
+                    dialog.setPositiveButton("SI", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            databaseReference.child(selected_key_alumno).removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
+                                @Override
+                                public void onSuccess(Void aVoid) {
+                                    Toast.makeText(SecondActivity.this, "¡Borrado correctamente!", Toast.LENGTH_SHORT).show();
+                                }
+                            }).addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    Toast.makeText(SecondActivity.this, "" + e.getMessage(), Toast.LENGTH_SHORT).show();
+                                }
+                            });
+
+                        }
+                    }).setNegativeButton("NO", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+
+                        }
+                    });
+                    dialog.create();
+                    dialog.show();
+                } else {
+                    Toast.makeText(getApplicationContext(), "Debe seleccionar un alumno", Toast.LENGTH_SHORT).show();
+                }
+
             }
+
         });
+
+        selected_key_alumno = "null";
+        selected_alumno = null;
+        displayAlumno();
     }
 
     private void instancias() {
@@ -129,12 +162,12 @@ public class SecondActivity extends AppCompatActivity implements DialogoAlumno.O
         adapter = new FirebaseRecyclerAdapter<Alumno, MyRecyclerViewHolder2>(options) {
             @Override
             protected void onBindViewHolder(@NonNull MyRecyclerViewHolder2 holder, int position, @NonNull final Alumno model) {
-                if(selected_modulo.getId().equals(model.getId_modulo())){
+                if (selected_modulo.getId().equals(model.getId_modulo())) {
                     holder.text_item_nombre.setText(model.getNombre());
                     holder.text_item_apellidos.setText(model.getApellidos());
                     holder.text_item_numero.setText(model.getNumero_orden());
-                }else {
-                    System.out.println("...");
+                } else {
+
                 }
 
                 holder.setItemClickListener2(new itemClickListener2() {
@@ -165,6 +198,7 @@ public class SecondActivity extends AppCompatActivity implements DialogoAlumno.O
                     }
                 });
 
+
             }
 
             @NonNull
@@ -182,6 +216,12 @@ public class SecondActivity extends AppCompatActivity implements DialogoAlumno.O
     @Override
     public void onDialogoSelected(Alumno alumno) {
         databaseReference.push().setValue(alumno);
+        adapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void onDialogoSelectedAct(Alumno alumno) {
+        databaseReference.child(selected_key_alumno).setValue(alumno);
         adapter.notifyDataSetChanged();
     }
 }

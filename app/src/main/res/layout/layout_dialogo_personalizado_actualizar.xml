@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="30dp"
+    android:orientation="vertical"
+    android:background="@drawable/borde_personalizado">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:src="@drawable/valora"
+        android:layout_margin="10dp"></ImageView>
+
+    <EditText
+        android:id="@+id/edit_nombre_dialogo_act"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Introduce nombre" />
+
+    <EditText
+        android:id="@+id/edit_apellidos_dialogo_act"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Introduce apellidos" />
+
+    <EditText
+        android:id="@+id/edit_numero_dialogo_act"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Introduce número" />
+
+    <EditText
+        android:id="@+id/edit_perfil_dialogo_act"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Introduce perfil"/>
+
+    <EditText
+        android:id="@+id/edit_grupo_dialogo_act"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Introduce grupo" />
+
+    <EditText
+        android:id="@+id/edit_id_dialogo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:enabled="false"/>
+
+    <Button
+        android:id="@+id/button_actualizar_dialogo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Actualizar"
+        android:layout_margin="10dp"/>
+
+</LinearLayout>

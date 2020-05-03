@@ -31,6 +31,8 @@ public class MyRecyclerViewHolder2 extends RecyclerView.ViewHolder implements Vi
         this.itemClickListener2 = itemClickListener2;
     }
 
+
+
     @Override
     public void onClick(View v) {
         itemClickListener2.onClick(v, getAdapterPosition());

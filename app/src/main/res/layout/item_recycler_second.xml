@@ -10,6 +10,7 @@
         android:layout_height="match_parent"
         android:layout_marginLeft="10dp"
         android:textSize="30sp"
+        android:text="............."
         android:textStyle="italic|bold"></TextView>
 
     <TextView
@@ -18,6 +19,7 @@
         android:layout_height="match_parent"
         android:layout_marginLeft="10dp"
         android:textSize="20sp"
+        android:text="............."
         android:textStyle="italic"></TextView>
 
     <TextView
@@ -25,6 +27,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginLeft="10dp"
+        android:text="............."
         android:textSize="15sp"></TextView>
 
 </LinearLayout>
