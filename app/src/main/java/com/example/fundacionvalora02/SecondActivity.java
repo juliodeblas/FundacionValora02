@@ -38,6 +38,7 @@ public class SecondActivity extends AppCompatActivity implements DialogoAlumnoCr
     TextView text_alumnos_modulo;
     RecyclerView recycler_alumnos;
     Button button_crear, button_actualizar, button_eliminar;
+
     public static String selected_key_modulo;
     public static Modulo selected_modulo;
 
@@ -162,13 +163,10 @@ public class SecondActivity extends AppCompatActivity implements DialogoAlumnoCr
         adapter = new FirebaseRecyclerAdapter<Alumno, MyRecyclerViewHolder2>(options) {
             @Override
             protected void onBindViewHolder(@NonNull MyRecyclerViewHolder2 holder, int position, @NonNull final Alumno model) {
-                if (selected_modulo.getId().equals(model.getId_modulo())) {
-                    holder.text_item_nombre.setText(model.getNombre());
-                    holder.text_item_apellidos.setText(model.getApellidos());
-                    holder.text_item_numero.setText(model.getNumero_orden());
-                } else {
+                holder.text_item_nombre.setText(model.getNombre());
+                holder.text_item_apellidos.setText(model.getApellidos());
+                holder.text_item_numero.setText(model.getNumero_orden());
 
-                }
 
                 holder.setItemClickListener2(new itemClickListener2() {
                     @Override
@@ -197,9 +195,8 @@ public class SecondActivity extends AppCompatActivity implements DialogoAlumnoCr
                         Log.d("Key item", "" + selected_key_alumno);
                     }
                 });
-
-
             }
+
 
             @NonNull
             @Override

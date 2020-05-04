@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".LoginActivity"
+    android:background="@drawable/fondo">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.3"
+        android:orientation="vertical">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@color/blanco"
+            android:layout_margin="10dp"
+            android:alpha="0.5"></ImageView>
+
+        <ImageView
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:src="@drawable/image"
+            android:layout_gravity="center"></ImageView>
+
+
+    </FrameLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.7"
+        android:orientation="vertical"
+        android:layout_gravity="center"
+        android:gravity="center">
+
+        <ProgressBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/progressbar_signup"
+            android:layout_marginBottom="40dp"
+            android:visibility="gone"></ProgressBar>
+
+        <EditText
+            android:id="@+id/edit_email_signup"
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginBottom="40dp"
+            android:hint="Email"
+            android:background="@drawable/rounded_edittext"
+            android:drawablePadding="20dp"
+            android:paddingLeft="10dp"
+            android:drawableLeft="@drawable/ic_email"
+            android:textColorHint="@color/colorPrimaryDark"
+            android:inputType="textEmailAddress"></EditText>
+
+        <EditText
+            android:id="@+id/edit_password_signup"
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginBottom="30dp"
+            android:hint="Password"
+            android:background="@drawable/rounded_edittext"
+            android:drawablePadding="20dp"
+            android:paddingLeft="10dp"
+            android:drawableLeft="@drawable/ic_password"
+            android:textColorHint="@color/colorPrimaryDark"
+            android:inputType="textPassword"></EditText>
+
+        <Button
+            android:id="@+id/button_signup"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="Sign up"
+            android:background="@drawable/rounded_edittext"
+            android:textColor="@color/colorPrimaryDark"></Button>
+
+        <TextView
+            android:id="@+id/text_login"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/blanco"
+            android:text="¿Ya tienes cuenta? Login"
+            android:layout_gravity="center"
+            android:textSize="20sp"></TextView>
+    </LinearLayout>
+
+</LinearLayout>
