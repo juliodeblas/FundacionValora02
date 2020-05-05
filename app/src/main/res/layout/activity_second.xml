@@ -4,9 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_margin="10dp"
     android:orientation="vertical"
     tools:context=".SecondActivity">
+
+    <androidx.appcompat.widget.Toolbar
+        android:background="@color/colorPrimary"
+        android:id="@+id/toolbar_second"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"></androidx.appcompat.widget.Toolbar>
 
     <TextView
         android:id="@+id/text_alumnos_modulo"
@@ -16,14 +21,16 @@
         android:layout_weight="0.1"
         android:gravity="center|left"
         android:text="Alumnos del modulo: "
-        android:textSize="15dp"></TextView>
+        android:textSize="15dp"
+        android:layout_margin="10dp"></TextView>
 
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_second"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="0.8"></androidx.recyclerview.widget.RecyclerView>
+        android:layout_weight="0.8"
+        android:layout_margin="10dp"></androidx.recyclerview.widget.RecyclerView>
 
     <LinearLayout
         android:layout_width="match_parent"

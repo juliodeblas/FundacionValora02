@@ -3,13 +3,18 @@ package com.example.fundacionvalora02;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -26,6 +31,7 @@ import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -38,6 +44,7 @@ public class SecondActivity extends AppCompatActivity implements DialogoAlumnoCr
     TextView text_alumnos_modulo;
     RecyclerView recycler_alumnos;
     Button button_crear, button_actualizar, button_eliminar;
+    Toolbar toolbar;
 
     public static String selected_key_modulo;
     public static Modulo selected_modulo;
@@ -134,6 +141,9 @@ public class SecondActivity extends AppCompatActivity implements DialogoAlumnoCr
         button_crear = findViewById(R.id.button_crear_alumno);
         button_actualizar = findViewById(R.id.button_actualizar_alumno);
         button_eliminar = findViewById(R.id.button_eliminar_alumno);
+        toolbar = findViewById(R.id.toolbar_second);
+        setSupportActionBar(toolbar);
+
         if (bundle != null) {
             selected_key_modulo = bundle.getString(String.valueOf(R.string.TAG_SELECTED_KEY));
             selected_modulo = (Modulo) bundle.getSerializable(String.valueOf(R.string.TAG_SELECTED_MODULO));
@@ -220,5 +230,34 @@ public class SecondActivity extends AppCompatActivity implements DialogoAlumnoCr
     public void onDialogoSelectedAct(Alumno alumno) {
         databaseReference.child(selected_key_alumno).setValue(alumno);
         adapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_others, menu);
+
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.menu_logout_others:
+                FirebaseAuth.getInstance().signOut();
+                Intent intent = new Intent(SecondActivity.this, LoginActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
+
+                break;
+            case R.id.menu_home_others:
+                Intent intent1 = new Intent(SecondActivity.this, MainActivity.class);
+                intent1.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent1);
+
+                break;
+        }
+
+        return true;
     }
 }
