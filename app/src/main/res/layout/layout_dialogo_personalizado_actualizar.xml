@@ -3,8 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="30dp"
-    android:orientation="vertical"
-    android:background="@drawable/borde_personalizado">
+    android:orientation="vertical">
 
     <ImageView
         android:layout_width="match_parent"

@@ -77,7 +77,7 @@ public class SignUpActivity extends AppCompatActivity {
         }
 
         if (password.length() < 6) {
-            edit_password_signup.setError("La contraseña debe tener más de 6 caracteres");
+            edit_password_signup.setError("La contraseña debe tener al menos 6 caracteres");
             edit_password_signup.requestFocus();
             return;
         }

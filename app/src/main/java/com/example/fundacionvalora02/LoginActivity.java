@@ -74,7 +74,7 @@ public class LoginActivity extends AppCompatActivity {
         }
 
         if (password.length() < 6) {
-            edit_password.setError("La contraseña debe tener más de 6 caracteres");
+            edit_password.setError("La contraseña debe tener al menos 6 caracteres");
             edit_password.requestFocus();
             return;
         }

@@ -70,6 +70,7 @@ public class MainActivity extends AppCompatActivity {
         toolbar = findViewById(R.id.toolbar_main);
         setSupportActionBar(toolbar);
 
+
         firebaseDatabase = FirebaseDatabase.getInstance();
         databaseReference = firebaseDatabase.getReference("modulos");
 

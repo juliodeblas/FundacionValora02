@@ -36,6 +36,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 public class SecondActivity extends AppCompatActivity implements DialogoAlumnoCrear.OnDialogoPersoListener, DialogoAlumnoActualizar.OnDialogoPersoListener {
@@ -51,6 +52,7 @@ public class SecondActivity extends AppCompatActivity implements DialogoAlumnoCr
 
     FirebaseDatabase firebaseDatabase;
     DatabaseReference databaseReference;
+    Query query;
 
     FirebaseRecyclerOptions<Alumno> options;
     FirebaseRecyclerAdapter<Alumno, MyRecyclerViewHolder2> adapter;
@@ -149,9 +151,10 @@ public class SecondActivity extends AppCompatActivity implements DialogoAlumnoCr
             selected_modulo = (Modulo) bundle.getSerializable(String.valueOf(R.string.TAG_SELECTED_MODULO));
         }
         id_modulo = selected_modulo.getId();
-        text_alumnos_modulo.setText(text_alumnos_modulo.getText() + selected_modulo.getNombre() + " " + selected_modulo.getCurso());
+        text_alumnos_modulo.setText(text_alumnos_modulo.getText() + selected_modulo.getNombre() + " " + selected_modulo.getCurso() + " (Código: " + selected_modulo.getId() + ")");
         firebaseDatabase = FirebaseDatabase.getInstance();
-        databaseReference = firebaseDatabase.getReference("alumnos");
+        databaseReference = firebaseDatabase.getReference().child("alumnos");
+        query = databaseReference.orderByChild("id_modulo").equalTo(selected_modulo.getId());
 
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
@@ -169,7 +172,7 @@ public class SecondActivity extends AppCompatActivity implements DialogoAlumnoCr
     }
 
     private void displayAlumno() {
-        options = new FirebaseRecyclerOptions.Builder<Alumno>().setQuery(databaseReference, Alumno.class).build();
+        options = new FirebaseRecyclerOptions.Builder<Alumno>().setQuery(query, Alumno.class).build();
         adapter = new FirebaseRecyclerAdapter<Alumno, MyRecyclerViewHolder2>(options) {
             @Override
             protected void onBindViewHolder(@NonNull MyRecyclerViewHolder2 holder, int position, @NonNull final Alumno model) {
@@ -242,7 +245,7 @@ public class SecondActivity extends AppCompatActivity implements DialogoAlumnoCr
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()){
+        switch (item.getItemId()) {
             case R.id.menu_logout_others:
                 FirebaseAuth.getInstance().signOut();
                 Intent intent = new Intent(SecondActivity.this, LoginActivity.class);
