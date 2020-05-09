@@ -42,19 +42,22 @@
             android:id="@+id/button_crear_alumno"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="CREAR"></Button>
+            android:text="CREAR"
+            android:background="@drawable/rounded_edittext"></Button>
 
         <Button
             android:id="@+id/button_eliminar_alumno"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="ELIMINAR"></Button>
+            android:text="ELIMINAR"
+            android:background="@drawable/rounded_edittext"></Button>
 
         <Button
             android:id="@+id/button_actualizar_alumno"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="ACTUALIZAR"></Button>
+            android:text="ACTUALIZAR"
+            android:background="@drawable/rounded_edittext"></Button>
 
     </LinearLayout>
 

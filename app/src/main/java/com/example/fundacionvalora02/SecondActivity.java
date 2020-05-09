@@ -57,8 +57,6 @@ public class SecondActivity extends AppCompatActivity implements DialogoAlumnoCr
     FirebaseRecyclerOptions<Alumno> options;
     FirebaseRecyclerAdapter<Alumno, MyRecyclerViewHolder2> adapter;
 
-    String id_modulo;
-
     public static Alumno selected_alumno;
     public static String selected_key_alumno;
 
@@ -147,10 +145,9 @@ public class SecondActivity extends AppCompatActivity implements DialogoAlumnoCr
         setSupportActionBar(toolbar);
 
         if (bundle != null) {
-            selected_key_modulo = bundle.getString(String.valueOf(R.string.TAG_SELECTED_KEY));
+            selected_key_modulo = bundle.getString(String.valueOf(R.string.TAG_SELECTED_KEY_MODULO));
             selected_modulo = (Modulo) bundle.getSerializable(String.valueOf(R.string.TAG_SELECTED_MODULO));
         }
-        id_modulo = selected_modulo.getId();
         text_alumnos_modulo.setText(text_alumnos_modulo.getText() + selected_modulo.getNombre() + " " + selected_modulo.getCurso() + " (Código: " + selected_modulo.getId() + ")");
         firebaseDatabase = FirebaseDatabase.getInstance();
         databaseReference = firebaseDatabase.getReference().child("alumnos");
@@ -190,7 +187,10 @@ public class SecondActivity extends AppCompatActivity implements DialogoAlumnoCr
                         builder.setPositiveButton("SI", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-
+                                Intent intent = new Intent(SecondActivity.this, DetalleAlumnoActivity.class);
+                                intent.putExtra(String.valueOf(R.string.TAG_SELECTED_KEY_ALUMNO), selected_key_alumno);
+                                intent.putExtra(String.valueOf(R.string.TAG_SELECTED_ALUMNO), selected_alumno);
+                                startActivity(intent);
                             }
                         });
                         builder.setNegativeButton("NO", new DialogInterface.OnClickListener() {

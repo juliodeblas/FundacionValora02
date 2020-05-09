@@ -172,7 +172,7 @@ public class MainActivity extends AppCompatActivity {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 Intent intent = new Intent(MainActivity.this, SecondActivity.class);
-                                intent.putExtra(String.valueOf(R.string.TAG_SELECTED_KEY), selected_key_modulo);
+                                intent.putExtra(String.valueOf(R.string.TAG_SELECTED_KEY_MODULO), selected_key_modulo);
                                 intent.putExtra(String.valueOf(R.string.TAG_SELECTED_MODULO), selected_modulo);
                                 startActivity(intent);
                             }
