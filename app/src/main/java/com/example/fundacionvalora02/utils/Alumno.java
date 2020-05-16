@@ -4,18 +4,19 @@ import java.io.Serializable;
 
 public class Alumno implements Serializable {
 
-    String nombre, apellidos, numero_orden, perfil, grupo, id_modulo;
+    String nombre, apellidos, numero_orden, perfil, grupo, id_modulo, id;
 
     public Alumno() {
     }
 
-    public Alumno(String nombre, String apellidos, String numero_orden, String perfil, String grupo, String id_modulo) {
+    public Alumno(String nombre, String apellidos, String numero_orden, String perfil, String grupo, String id_modulo, String id) {
         this.nombre = nombre;
         this.apellidos = apellidos;
         this.numero_orden = numero_orden;
         this.perfil = perfil;
         this.grupo = grupo;
         this.id_modulo = id_modulo;
+        this.id = id;
     }
 
     public String getNombre() {
@@ -64,5 +65,13 @@ public class Alumno implements Serializable {
 
     public void setId_modulo(String id_modulo) {
         this.id_modulo = id_modulo;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 }

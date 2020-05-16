@@ -1,0 +1,308 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="30dp"
+    android:orientation="vertical">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_margin="10dp"
+        android:layout_marginBottom="10dp"
+        android:src="@drawable/valora"></ImageView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.5"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="0.2">
+
+                <TextView
+                    android:id="@+id/text_conseguido_saber_hacer"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:layout_weight="0.7"
+                    android:background="@drawable/rounded_edittext"
+                    android:padding="3dp"
+                    android:text="Conseguido: "
+                    android:textSize="17sp"
+                    android:layout_gravity="center"></TextView>
+
+                <TextView
+                    android:id="@+id/text_numero_conseguido_saber_hacer"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.3"
+                    android:background="@drawable/rounded_edittext"
+                    android:padding="3dp"
+                    android:text=""
+                    android:textSize="20sp"
+                    android:layout_gravity="center"></TextView>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="0.2">
+
+                <TextView
+                    android:id="@+id/text_en_proceso_saber_hacer"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.7"
+                    android:layout_margin="10dp"
+                    android:background="@drawable/rounded_edittext"
+                    android:padding="3dp"
+                    android:text="En proceso: "
+                    android:textSize="17sp"
+                    android:layout_gravity="center"></TextView>
+
+                <TextView
+                    android:id="@+id/text_numero_en_proceso_saber_hacer"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.3"
+                    android:background="@drawable/rounded_edittext"
+                    android:padding="3dp"
+                    android:text=""
+                    android:textSize="20sp"
+                    android:layout_gravity="center"></TextView>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="0.2">
+
+                <TextView
+                    android:id="@+id/text_no_conseguido_saber_hacer"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.7"
+                    android:layout_margin="10dp"
+                    android:background="@drawable/rounded_edittext"
+                    android:padding="3dp"
+                    android:text="No conseguido: "
+                    android:textSize="14sp"
+                    android:layout_gravity="center"></TextView>
+
+                <TextView
+                    android:id="@+id/text_numero_no_conseguido_saber_hacer"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.3"
+                    android:background="@drawable/rounded_edittext"
+                    android:padding="3dp"
+                    android:text=""
+                    android:textSize="20sp"
+                    android:layout_gravity="center"></TextView>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="0.2">
+
+                <TextView
+                    android:id="@+id/text_faltas_saber_hacer"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.7"
+                    android:layout_margin="10dp"
+                    android:background="@drawable/rounded_edittext"
+                    android:padding="3dp"
+                    android:text="Faltas: "
+                    android:textSize="20sp"
+                    android:layout_gravity="center"></TextView>
+
+                <TextView
+                    android:id="@+id/text_numero_faltas_saber_hacer"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.3"
+                    android:background="@drawable/rounded_edittext"
+                    android:padding="3dp"
+                    android:text=""
+                    android:textSize="20sp"
+                    android:layout_gravity="center"></TextView>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="0.2">
+
+                <TextView
+                    android:id="@+id/text_faltas_justificadas_saber_hacer"
+                    android:layout_width="0dp"
+                    android:layout_height="45dp"
+                    android:layout_weight="0.7"
+                    android:layout_margin="10dp"
+                    android:background="@drawable/rounded_edittext"
+                    android:padding="5dp"
+                    android:text="Faltas justificadas: "
+                    android:textSize="15sp"
+                    android:layout_gravity="center"></TextView>
+
+                <TextView
+                    android:id="@+id/text_numero_faltas_justificadas_saber_hacer"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.3"
+                    android:background="@drawable/rounded_edittext"
+                    android:padding="3dp"
+                    android:text=""
+                    android:textSize="20sp"
+                    android:layout_gravity="center"></TextView>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.5"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="0.2"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <ImageButton
+                    android:id="@+id/button_mas_conseguido_saber_hacer"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:background="@drawable/simbolo_mas"></ImageButton>
+
+                <ImageButton
+                    android:id="@+id/button_menos_conseguido_saber_hacer"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_marginLeft="20dp"
+                    android:background="@drawable/simbolo_menos"></ImageButton>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="0.2"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <ImageButton
+                    android:id="@+id/button_mas_en_proceso_saber_hacer"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:background="@drawable/simbolo_mas"></ImageButton>
+
+                <ImageButton
+                    android:id="@+id/button_menos_en_proceso_saber_hacer"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_marginLeft="20dp"
+                    android:background="@drawable/simbolo_menos"></ImageButton>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="0.2"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <ImageButton
+                    android:id="@+id/button_mas_no_conseguido_saber_hacer"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:background="@drawable/simbolo_mas"></ImageButton>
+
+                <ImageButton
+                    android:id="@+id/button_menos_no_conseguido_saber_hacer"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_marginLeft="20dp"
+                    android:background="@drawable/simbolo_menos"></ImageButton>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="0.2"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <ImageButton
+                    android:id="@+id/button_mas_faltas_saber_hacer"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:background="@drawable/simbolo_mas"></ImageButton>
+
+                <ImageButton
+                    android:id="@+id/button_menos_faltas_saber_hacer"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_marginLeft="20dp"
+                    android:background="@drawable/simbolo_menos"></ImageButton>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="0.2"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <ImageButton
+                    android:id="@+id/button_mas_faltas_justificadas_saber_hacer"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:background="@drawable/simbolo_mas"></ImageButton>
+
+                <ImageButton
+                    android:id="@+id/button_menos_faltas_justificadas_saber_hacer"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_marginLeft="20dp"
+                    android:background="@drawable/simbolo_menos"></ImageButton>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/button_dialogo_saber_hacer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:background="@drawable/rounded_edittext"
+        android:gravity="center"
+        android:padding="10dp"
+        android:text="Actualizar saber hacer"></Button>
+
+</LinearLayout>

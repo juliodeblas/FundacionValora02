@@ -18,6 +18,10 @@ import androidx.fragment.app.DialogFragment;
 import com.example.fundacionvalora02.R;
 import com.example.fundacionvalora02.SecondActivity;
 import com.example.fundacionvalora02.utils.Alumno;
+import com.example.fundacionvalora02.utils.SemaforoSaberEstar;
+import com.example.fundacionvalora02.utils.SemaforoSaberHacer;
+
+import java.util.Random;
 
 public class DialogoAlumnoCrear extends DialogFragment {
 
@@ -25,6 +29,9 @@ public class DialogoAlumnoCrear extends DialogFragment {
     View vista;
     Button button_crear;
     OnDialogoPersoListener listener;
+
+    String letters = "abcdefghijklmnopqrstuvwxyz";
+    char[] alfanumerico = (letters + letters.toUpperCase() + "0123456789").toCharArray();
 
     @Override
     public void onAttach(@NonNull Context context) {
@@ -56,16 +63,20 @@ public class DialogoAlumnoCrear extends DialogFragment {
                 if (!edit_nombre.getText().toString().matches("") && !edit_apellidos.getText().toString().matches("")
                         && !edit_numero.getText().toString().matches("") && !edit_grupo.getText().toString().matches("") &&
                         !edit_perfil.getText().toString().matches("") && !edit_id.getText().toString().matches("")) {
-                    String nombre, apellidos, numero, perfil, grupo, id;
+                    String nombre, apellidos, numero, perfil, grupo, id_modulo;
                     nombre = edit_nombre.getText().toString();
                     apellidos = edit_apellidos.getText().toString();
                     numero = edit_numero.getText().toString();
                     perfil = edit_perfil.getText().toString();
                     grupo = edit_grupo.getText().toString();
-                    id = edit_id.getText().toString();
+                    id_modulo = edit_id.getText().toString();
+                    String id = generadoralfanumericos(10);
 
-                    Alumno alumno = new Alumno(nombre, apellidos, numero, perfil, grupo, id);
-                    listener.onDialogoSelected(alumno);
+                    Alumno alumno = new Alumno(nombre, apellidos, numero, perfil, grupo, id_modulo, id);
+                    SemaforoSaberHacer semaforoSaberHacer = new SemaforoSaberHacer(0, 0, 0, 0, 0, id);
+                    SemaforoSaberEstar semaforoSaberEstar = new SemaforoSaberEstar(0, 0, 0, 0, 0, alumno.getId());
+
+                    listener.onDialogoSelected(alumno, semaforoSaberHacer, semaforoSaberEstar);
                     dismiss();
                 } else {
                     Toast.makeText(getContext(), "Debe introducir todos los datos", Toast.LENGTH_SHORT).show();
@@ -87,6 +98,16 @@ public class DialogoAlumnoCrear extends DialogFragment {
     }
 
     public interface OnDialogoPersoListener {
-        void onDialogoSelected(Alumno alumno);
+        void onDialogoSelected(Alumno alumno, SemaforoSaberHacer semaforoSaberHacer, SemaforoSaberEstar semaforoSaberEstar);
+    }
+
+    public String generadoralfanumericos(int length) {
+        StringBuilder builder = new StringBuilder();
+
+        for (int i = 0; i < length; i++) {
+            builder.append(alfanumerico[new Random().nextInt(alfanumerico.length)]);
+        }
+
+        return builder.toString();
     }
 }

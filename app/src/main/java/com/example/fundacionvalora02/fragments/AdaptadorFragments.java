@@ -11,7 +11,7 @@ import java.util.ArrayList;
 public class AdaptadorFragments extends FragmentPagerAdapter {
 
     private ArrayList<Fragment> lista_fragments;
-    private String[] nombres = new String[]{"Detalles", "Semáforo", "Otros"};
+    private String[] nombres = new String[]{"Detalles", "Saber Hacer", "Saber estar"};
 
     public AdaptadorFragments(@NonNull FragmentManager fm, int behavior, ArrayList<Fragment> lista_fragments) {
         super(fm, behavior);

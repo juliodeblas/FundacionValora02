@@ -47,8 +47,8 @@ public class MainActivity extends AppCompatActivity {
     FirebaseRecyclerOptions<Modulo> options;
     FirebaseRecyclerAdapter<Modulo, MyRecyclerViewHolder> adapter;
 
-    Modulo selected_modulo;
-    String selected_key_modulo;
+    public static Modulo selected_modulo;
+    public static String selected_key_modulo;
 
     Toolbar toolbar;
 

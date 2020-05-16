@@ -27,6 +27,8 @@ import com.example.fundacionvalora02.recycler_second.MyRecyclerViewHolder2;
 import com.example.fundacionvalora02.recycler_second.itemClickListener2;
 import com.example.fundacionvalora02.utils.Alumno;
 import com.example.fundacionvalora02.utils.Modulo;
+import com.example.fundacionvalora02.utils.SemaforoSaberEstar;
+import com.example.fundacionvalora02.utils.SemaforoSaberHacer;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -52,6 +54,8 @@ public class SecondActivity extends AppCompatActivity implements DialogoAlumnoCr
 
     FirebaseDatabase firebaseDatabase;
     DatabaseReference databaseReference;
+    DatabaseReference databaseReference1;
+    DatabaseReference databaseReference2;
     Query query;
 
     FirebaseRecyclerOptions<Alumno> options;
@@ -59,6 +63,8 @@ public class SecondActivity extends AppCompatActivity implements DialogoAlumnoCr
 
     public static Alumno selected_alumno;
     public static String selected_key_alumno;
+    public static SemaforoSaberHacer selected_semaforo_SaberHacer_alumno;
+    public static String selected_key_semaforo_alumno;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -152,6 +158,8 @@ public class SecondActivity extends AppCompatActivity implements DialogoAlumnoCr
         firebaseDatabase = FirebaseDatabase.getInstance();
         databaseReference = firebaseDatabase.getReference().child("alumnos");
         query = databaseReference.orderByChild("id_modulo").equalTo(selected_modulo.getId());
+        databaseReference1 = firebaseDatabase.getReference().child("semaforos_saber_hacer");
+        databaseReference2 = firebaseDatabase.getReference().child("semaforos_saber_estar");
 
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
@@ -224,8 +232,10 @@ public class SecondActivity extends AppCompatActivity implements DialogoAlumnoCr
     }
 
     @Override
-    public void onDialogoSelected(Alumno alumno) {
+    public void onDialogoSelected(Alumno alumno, SemaforoSaberHacer semaforoSaberHacer, SemaforoSaberEstar semaforoSaberEstar) {
         databaseReference.push().setValue(alumno);
+        databaseReference1.push().setValue(semaforoSaberHacer);
+        databaseReference2.push().setValue(semaforoSaberEstar);
         adapter.notifyDataSetChanged();
     }
 

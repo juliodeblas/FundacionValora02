@@ -6,7 +6,7 @@
     tools:context=".fragments.FragmentUno"
     android:id="@+id/fondo"
     android:orientation="vertical"
-    android:background="@drawable/fondo">
+    android:background="@drawable/fondo3">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -79,7 +79,8 @@
             android:gravity="center|left"
             android:textSize="20sp"
             android:padding="10dp"
-            android:background="@drawable/rounded_edittext"></TextView>
+            android:background="@drawable/rounded_edittext"
+            android:layout_marginBottom="10dp"></TextView>
 
         <TextView
             android:id="@+id/text_perfil_detalle"

@@ -1,15 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/fondo"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragments.FragmentDos"
-    android:id="@+id/fondo">
+    android:background="@drawable/fondo3"
+    android:orientation="vertical"
+    tools:context=".fragments.FragmentDos">
 
-    <!-- TODO: Update blank fragment layout -->
     <TextView
+        android:id="@+id/text_saber_hacer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:text="Saber Hacer"
+        android:textColor="@color/blanco"
+        android:textSize="30sp"></TextView>
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_margin="10dp"
+        android:orientation="vertical">
 
-</FrameLayout>
+        <com.github.mikephil.charting.charts.PieChart
+            android:id="@+id/piechart_semaforo_saber_hacer"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.8"
+            android:background="@color/blanco"></com.github.mikephil.charting.charts.PieChart>
+
+        <ImageButton
+            android:id="@+id/imagebutton_semaforo_saber_hacer"
+            android:layout_width="150dp"
+            android:layout_height="0dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:layout_weight="0.1"
+            android:background="@drawable/semaforo"
+            android:scaleType="fitXY"></ImageButton>
+
+    </LinearLayout>
+
+</LinearLayout>

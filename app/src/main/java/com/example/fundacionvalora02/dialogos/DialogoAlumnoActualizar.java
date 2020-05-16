@@ -26,8 +26,6 @@ public class DialogoAlumnoActualizar extends DialogFragment {
     Button button_actualizar;
     OnDialogoPersoListener listener;
 
-
-
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
@@ -58,15 +56,16 @@ public class DialogoAlumnoActualizar extends DialogFragment {
                 if (!edit_nombre.getText().toString().matches("") && !edit_apellidos.getText().toString().matches("")
                         && !edit_numero.getText().toString().matches("") && !edit_grupo.getText().toString().matches("") &&
                         !edit_perfil.getText().toString().matches("") && !edit_id.getText().toString().matches("")) {
-                    String nombre, apellidos, numero, perfil, grupo, id;
+                    String nombre, apellidos, numero, perfil, grupo, id_modulo;
                     nombre = edit_nombre.getText().toString();
                     apellidos = edit_apellidos.getText().toString();
                     numero = edit_numero.getText().toString();
                     perfil = edit_perfil.getText().toString();
                     grupo = edit_grupo.getText().toString();
-                    id = edit_id.getText().toString();
+                    id_modulo = edit_id.getText().toString();
+                    String id = SecondActivity.selected_alumno.getId();
 
-                    Alumno alumno = new Alumno(nombre, apellidos, numero, perfil, grupo, id);
+                    Alumno alumno = new Alumno(nombre, apellidos, numero, perfil, grupo, id_modulo, id);
                     listener.onDialogoSelectedAct(alumno);
                     dismiss();
                 } else {
@@ -96,4 +95,5 @@ public class DialogoAlumnoActualizar extends DialogFragment {
     public interface OnDialogoPersoListener {
         void onDialogoSelectedAct(Alumno alumno);
     }
+
 }
