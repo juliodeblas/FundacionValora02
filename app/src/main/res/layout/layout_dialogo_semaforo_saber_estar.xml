@@ -303,6 +303,7 @@
         android:background="@drawable/rounded_edittext"
         android:gravity="center"
         android:padding="10dp"
-        android:text="Actualizar saber estar"></Button>
+        android:text="Actualizar saber estar"
+        android:layout_margin="10dp"></Button>
 
 </LinearLayout>

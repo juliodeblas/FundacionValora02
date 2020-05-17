@@ -5,5 +5,10 @@
     <color name="colorPrimaryLight">#FF8A8A</color>
     <color name="colorAccent">#D81B60</color>
     <color name="blanco">#FFFFFF</color>
+    <color name="amarillo">#FF9800</color>
+    <color name="azul">#008578</color>
+    <color name="rojo">#EF382B</color>
     <color name="negro">#000000</color>
+    <color name="light_red">#38FFD900</color>
+    <color name="light_white">#5FFFFFFF</color>
 </resources>

@@ -1,5 +1,6 @@
 package com.example.fundacionvalora02.fragments;
 
+import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -34,6 +35,8 @@ import org.w3c.dom.Text;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.github.mikephil.charting.utils.ColorTemplate.rgb;
+
 /**
  * A simple {@link Fragment} subclass.
  */
@@ -41,7 +44,6 @@ public class FragmentDos extends Fragment implements DialogoSemaforoSaberHacer.O
 
     PieChart pieChart;
     ImageButton imageButton;
-    TextView text_saber_hacer;
 
     FirebaseDatabase database;
     DatabaseReference reference;
@@ -71,7 +73,6 @@ public class FragmentDos extends Fragment implements DialogoSemaforoSaberHacer.O
         View view = inflater.inflate(R.layout.fragment_dos, container, false);
         pieChart = view.findViewById(R.id.piechart_semaforo_saber_hacer);
         imageButton = view.findViewById(R.id.imagebutton_semaforo_saber_hacer);
-        text_saber_hacer = view.findViewById(R.id.text_saber_hacer);
 
         database = FirebaseDatabase.getInstance();
         reference = database.getReference("semaforos_saber_hacer");
@@ -100,7 +101,7 @@ public class FragmentDos extends Fragment implements DialogoSemaforoSaberHacer.O
                         }
 
                         PieDataSet pieDataSet = new PieDataSet(pieEntries, "");
-                        pieDataSet.setColors(ColorTemplate.JOYFUL_COLORS);
+                        pieDataSet.setColors(FragmentDos.COLORES_JULIO);
                         pieDataSet.setValueTextSize(25);
 
                         PieData pieData = new PieData(pieDataSet);
@@ -108,8 +109,10 @@ public class FragmentDos extends Fragment implements DialogoSemaforoSaberHacer.O
                         Description description = new Description();
                         description.setText(selected_alumno.getNombre() + " " + selected_alumno.getApellidos());
                         description.setEnabled(true);
-                        description.setTextSize(15);
+                        description.setTextSize(30);
+
                         pieChart.setDescription(description);
+                        pieChart.setBackgroundColor(getResources().getColor(R.color.light_white));
 
                         pieChart.setData(pieData);
                         pieChart.invalidate();
@@ -139,4 +142,9 @@ public class FragmentDos extends Fragment implements DialogoSemaforoSaberHacer.O
         reference.child(selected_key_semaforo_saber_hacer).setValue(semaforo);
         pieChart.notifyDataSetChanged();
     }
+
+    public static final int[] COLORES_JULIO = {
+            rgb("#4caf50"), rgb("#ffeb3b"), rgb("#f44336"), rgb("#b0bec5"), rgb("eeeeee")
+    };
+
 }

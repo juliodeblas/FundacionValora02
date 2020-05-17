@@ -32,6 +32,8 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.github.mikephil.charting.utils.ColorTemplate.rgb;
+
 /**
  * A simple {@link Fragment} subclass.
  */
@@ -39,7 +41,6 @@ public class FragmentTres extends Fragment implements DialogoSemaforoSaberEstar.
 
     PieChart pieChart;
     ImageButton imageButton;
-    TextView text_saber_estar;
 
     private Alumno selected_alumno;
     private String selected_key_alumno;
@@ -69,7 +70,6 @@ public class FragmentTres extends Fragment implements DialogoSemaforoSaberEstar.
         View view = inflater.inflate(R.layout.fragment_tres, container, false);
         pieChart = view.findViewById(R.id.piechart_semaforo_saber_estar);
         imageButton = view.findViewById(R.id.imagebutton_semaforo_saber_estar);
-        text_saber_estar = view.findViewById(R.id.text_saber_estar);
 
         database = FirebaseDatabase.getInstance();
         reference = database.getReference("semaforos_saber_estar");
@@ -98,7 +98,7 @@ public class FragmentTres extends Fragment implements DialogoSemaforoSaberEstar.
                         }
 
                         PieDataSet pieDataSet = new PieDataSet(pieEntries, "");
-                        pieDataSet.setColors(ColorTemplate.JOYFUL_COLORS);
+                        pieDataSet.setColors(FragmentDos.COLORES_JULIO);
                         pieDataSet.setValueTextSize(25);
 
                         PieData pieData = new PieData(pieDataSet);
@@ -106,8 +106,10 @@ public class FragmentTres extends Fragment implements DialogoSemaforoSaberEstar.
                         Description description = new Description();
                         description.setText(selected_alumno.getNombre() + " " + selected_alumno.getApellidos());
                         description.setEnabled(true);
-                        description.setTextSize(15);
+                        description.setTextSize(30);
+
                         pieChart.setDescription(description);
+                        pieChart.setBackgroundColor(getResources().getColor(R.color.light_white));
 
                         pieChart.setData(pieData);
                         pieChart.invalidate();
@@ -136,4 +138,8 @@ public class FragmentTres extends Fragment implements DialogoSemaforoSaberEstar.
     public void semaforoSaberEstarListener(SemaforoSaberEstar semaforo) {
         reference.child(selected_key_semaforo_saber_estar).setValue(semaforo);
     }
+
+    public static final int[] COLORES_JULIO = {
+            rgb("#4caf50"), rgb("#ffeb3b"), rgb("#f44336"), rgb("#b0bec5"), rgb("eeeeee")
+    };
 }

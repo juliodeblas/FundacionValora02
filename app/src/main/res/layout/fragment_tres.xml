@@ -4,19 +4,10 @@
     android:id="@+id/fondo"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/fondo3"
+    android:background="@drawable/fondo_libros"
     android:orientation="vertical"
     tools:context=".fragments.FragmentDos">
 
-    <TextView
-        android:id="@+id/text_saber_estar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:gravity="center"
-        android:text="Saber Estar"
-        android:textColor="@color/blanco"
-        android:textSize="30sp"></TextView>
 
     <LinearLayout
         android:layout_width="match_parent"
