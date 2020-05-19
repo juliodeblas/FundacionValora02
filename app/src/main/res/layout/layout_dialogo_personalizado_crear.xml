@@ -16,31 +16,36 @@
         android:id="@+id/edit_nombre_dialogo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Introduce nombre" />
+        android:hint="Introduce nombre"
+        android:inputType="textCapSentences"/>
 
     <EditText
         android:id="@+id/edit_apellidos_dialogo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Introduce apellidos" />
+        android:hint="Introduce apellidos"
+        android:inputType="textCapSentences" />
 
     <EditText
         android:id="@+id/edit_numero_dialogo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Introduce número" />
+        android:hint="Introduce número"
+        android:inputType="number"/>
 
     <EditText
         android:id="@+id/edit_perfil_dialogo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Introduce perfil"/>
+        android:hint="Introduce perfil"
+        android:inputType="textCapSentences"/>
 
     <EditText
         android:id="@+id/edit_grupo_dialogo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Introduce grupo" />
+        android:hint="Introduce grupo"
+        android:inputType="textCapSentences"/>
 
     <EditText
         android:id="@+id/edit_id_dialogo"

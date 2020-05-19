@@ -11,8 +11,7 @@
         android:layout_marginLeft="10dp"
         android:textSize="30sp"
         android:text="Nombre alumno"
-        android:textStyle="italic|bold"
-        android:textColor="@color/negro"></TextView>
+        android:textStyle="italic|bold"></TextView>
 
     <TextView
         android:id="@+id/text_item_apellidos_alumno"
@@ -21,8 +20,7 @@
         android:layout_marginLeft="10dp"
         android:textSize="20sp"
         android:text="Apellidos alumno"
-        android:textStyle="italic"
-        android:textColor="@color/negro"></TextView>
+        android:textStyle="italic"></TextView>
 
     <TextView
         android:id="@+id/text_item_numero_alumno"
@@ -30,7 +28,6 @@
         android:layout_height="match_parent"
         android:layout_marginLeft="10dp"
         android:text="Número alumno"
-        android:textSize="15sp"
-        android:textColor="@color/negro"></TextView>
+        android:textSize="15sp"></TextView>
 
 </LinearLayout>

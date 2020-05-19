@@ -65,6 +65,7 @@ public class SecondActivity extends AppCompatActivity implements DialogoAlumnoCr
     public static String selected_key_alumno;
     public static SemaforoSaberHacer selected_semaforo_SaberHacer_alumno;
     public static String selected_key_semaforo_alumno;
+    public static int contador;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -236,6 +237,7 @@ public class SecondActivity extends AppCompatActivity implements DialogoAlumnoCr
         databaseReference.push().setValue(alumno);
         databaseReference1.push().setValue(semaforoSaberHacer);
         databaseReference2.push().setValue(semaforoSaberEstar);
+        contador++;
         adapter.notifyDataSetChanged();
     }
 

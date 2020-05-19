@@ -1,6 +1,7 @@
 package com.example.fundacionvalora02;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -23,26 +24,35 @@ import android.widget.Toast;
 
 import com.example.fundacionvalora02.recycler_main.MyRecyclerViewHolder;
 import com.example.fundacionvalora02.recycler_main.itemClickListener;
+import com.example.fundacionvalora02.utils.Alumno;
 import com.example.fundacionvalora02.utils.Modulo;
+import com.example.fundacionvalora02.utils.SemaforoSaberEstar;
+import com.example.fundacionvalora02.utils.SemaforoSaberHacer;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.Random;
+
 public class MainActivity extends AppCompatActivity {
 
     RecyclerView recycler_view;
-    EditText edit_nombre, edit_curso, edit_id;
+    EditText edit_nombre, edit_curso;
     Button button_crear, button_eliminar;
 
     FirebaseDatabase firebaseDatabase;
     DatabaseReference databaseReference;
+    DatabaseReference databaseReference1;
+    DatabaseReference databaseReference2;
+    DatabaseReference databaseReference3;
 
     FirebaseRecyclerOptions<Modulo> options;
     FirebaseRecyclerAdapter<Modulo, MyRecyclerViewHolder> adapter;
@@ -50,13 +60,140 @@ public class MainActivity extends AppCompatActivity {
     public static Modulo selected_modulo;
     public static String selected_key_modulo;
 
+    String[] array_alumnos;
+    int i = 0;
+    String letters = "abcdefghijklmnopqrstuvwxyz";
+    char[] alfanumerico = (letters + letters.toUpperCase() + "0123456789").toCharArray();
+
     Toolbar toolbar;
+
+    String ultima_key;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         instancias();
+
+        databaseReference.addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+            }
+
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+            }
+
+            @Override
+            public void onChildRemoved(@NonNull final DataSnapshot snapshot) {
+                final Modulo modulo = snapshot.getValue(Modulo.class);
+
+                databaseReference1.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                        for (DataSnapshot item: dataSnapshot.getChildren()){
+                            Alumno alumno = item.getValue(Alumno.class);
+
+                            if (modulo.getId().equals(alumno.getId_modulo())){
+                                String key = item.getKey();
+                                databaseReference1.child(key).removeValue();
+                            }
+                        }
+                        return;
+
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
+
+                databaseReference1.addChildEventListener(new ChildEventListener() {
+                    @Override
+                    public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+                    }
+
+                    @Override
+                    public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+                    }
+
+                    @Override
+                    public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
+                        final Alumno alumno = dataSnapshot.getValue(Alumno.class);
+
+                        databaseReference2.addValueEventListener(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                                for (DataSnapshot item: dataSnapshot.getChildren()){
+                                    SemaforoSaberHacer semaforo = item.getValue(SemaforoSaberHacer.class);
+
+                                    if (alumno.getId().equals(semaforo.getId_alumno())){
+                                        String key = item.getKey();
+                                        databaseReference2.child(key).removeValue();
+                                    }
+                                }
+                                return;
+
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                            }
+                        });
+
+                        databaseReference3.addValueEventListener(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                                for (DataSnapshot item: dataSnapshot.getChildren()){
+                                    SemaforoSaberEstar semaforo = item.getValue(SemaforoSaberEstar.class);
+
+                                    if (alumno.getId().equals(semaforo.getId_alumno())){
+                                        String key = item.getKey();
+                                        databaseReference3.child(key).removeValue();
+                                    }
+                                }
+                                return;
+
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                            }
+                        });
+                    }
+
+                    @Override
+                    public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
+            }
+
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
     }
 
     private void instancias() {
@@ -64,7 +201,6 @@ public class MainActivity extends AppCompatActivity {
         recycler_view.setLayoutManager(new LinearLayoutManager(this));
         edit_nombre = findViewById(R.id.edit_nombre);
         edit_curso = findViewById(R.id.edit_curso);
-        edit_id = findViewById(R.id.edit_id);
         button_crear = findViewById(R.id.button_crear);
         button_eliminar = findViewById(R.id.button_eliminar);
         toolbar = findViewById(R.id.toolbar_main);
@@ -73,6 +209,9 @@ public class MainActivity extends AppCompatActivity {
 
         firebaseDatabase = FirebaseDatabase.getInstance();
         databaseReference = firebaseDatabase.getReference("modulos");
+        databaseReference1 = firebaseDatabase.getReference("alumnos");
+        databaseReference2 = firebaseDatabase.getReference("semaforos_saber_hacer");
+        databaseReference3 = firebaseDatabase.getReference("semaforos_saber_estar");
 
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
@@ -89,7 +228,7 @@ public class MainActivity extends AppCompatActivity {
         button_crear.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!edit_nombre.getText().toString().matches("") && !edit_curso.getText().toString().matches("") && !edit_id.getText().toString().matches("")) {
+                if (!edit_nombre.getText().toString().matches("") && !edit_curso.getText().toString().matches("")) {
                     crearModulo();
                 } else {
                     Toast.makeText(getApplicationContext(), "Debe introducir todos los datos", Toast.LENGTH_SHORT).show();
@@ -126,6 +265,8 @@ public class MainActivity extends AppCompatActivity {
 
                         }
                     });
+
+
                     dialog.create();
                     dialog.show();
                 } else {
@@ -144,7 +285,7 @@ public class MainActivity extends AppCompatActivity {
     private void crearModulo() {
         String nombre = edit_nombre.getText().toString();
         String curso = edit_curso.getText().toString();
-        String id = edit_id.getText().toString();
+        String id = generadoralfanumericos(10);
 
         Modulo modulo = new Modulo(nombre, curso, id);
 
@@ -193,7 +334,6 @@ public class MainActivity extends AppCompatActivity {
 
                         edit_nombre.setText(model.getNombre());
                         edit_curso.setText(model.getCurso());
-                        edit_id.setText(model.getId());
                     }
                 });
             }
@@ -221,7 +361,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()){
+        switch (item.getItemId()) {
             case R.id.menu_logout_main:
                 FirebaseAuth.getInstance().signOut();
                 Intent intent = new Intent(MainActivity.this, LoginActivity.class);
@@ -232,5 +372,15 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return true;
+    }
+
+    public String generadoralfanumericos(int length) {
+        StringBuilder builder = new StringBuilder();
+
+        for (int i = 0; i < length; i++) {
+            builder.append(alfanumerico[new Random().nextInt(alfanumerico.length)]);
+        }
+
+        return builder.toString();
     }
 }
