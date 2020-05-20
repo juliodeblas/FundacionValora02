@@ -60,14 +60,11 @@ public class MainActivity extends AppCompatActivity {
     public static Modulo selected_modulo;
     public static String selected_key_modulo;
 
-    String[] array_alumnos;
     int i = 0;
     String letters = "abcdefghijklmnopqrstuvwxyz";
     char[] alfanumerico = (letters + letters.toUpperCase() + "0123456789").toCharArray();
 
     Toolbar toolbar;
-
-    String ultima_key;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -1,6 +1,7 @@
 package com.example.fundacionvalora02;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -34,6 +35,7 @@ import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -63,9 +65,6 @@ public class SecondActivity extends AppCompatActivity implements DialogoAlumnoCr
 
     public static Alumno selected_alumno;
     public static String selected_key_alumno;
-    public static SemaforoSaberHacer selected_semaforo_SaberHacer_alumno;
-    public static String selected_key_semaforo_alumno;
-    public static int contador;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,8 +73,77 @@ public class SecondActivity extends AppCompatActivity implements DialogoAlumnoCr
         bundle = getIntent().getExtras();
         instancias();
         acciones();
-        System.out.println(selected_alumno);
-        System.out.println(selected_key_alumno);
+
+        databaseReference.addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+            }
+
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+            }
+
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
+                final Alumno alumno = dataSnapshot.getValue(Alumno.class);
+
+                databaseReference1.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                        for (DataSnapshot item : dataSnapshot.getChildren()) {
+                            SemaforoSaberHacer semaforo = item.getValue(SemaforoSaberHacer.class);
+
+                            if (alumno.getId().equals(semaforo.getId_alumno())) {
+                                String key = item.getKey();
+                                databaseReference1.child(key).removeValue();
+                            }
+                        }
+                        return;
+
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
+
+                databaseReference2.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                        for (DataSnapshot item : dataSnapshot.getChildren()) {
+                            SemaforoSaberEstar semaforo = item.getValue(SemaforoSaberEstar.class);
+
+                            if (alumno.getId().equals(semaforo.getId_alumno())) {
+                                String key = item.getKey();
+                                databaseReference2.child(key).removeValue();
+                            }
+                        }
+                        return;
+
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
+            }
+
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
     }
 
     private void acciones() {
@@ -111,6 +179,8 @@ public class SecondActivity extends AppCompatActivity implements DialogoAlumnoCr
                                 @Override
                                 public void onSuccess(Void aVoid) {
                                     Toast.makeText(SecondActivity.this, "¡Borrado correctamente!", Toast.LENGTH_SHORT).show();
+
+
                                 }
                             }).addOnFailureListener(new OnFailureListener() {
                                 @Override
@@ -155,7 +225,7 @@ public class SecondActivity extends AppCompatActivity implements DialogoAlumnoCr
             selected_key_modulo = bundle.getString(String.valueOf(R.string.TAG_SELECTED_KEY_MODULO));
             selected_modulo = (Modulo) bundle.getSerializable(String.valueOf(R.string.TAG_SELECTED_MODULO));
         }
-        text_alumnos_modulo.setText(text_alumnos_modulo.getText() + selected_modulo.getNombre() + " " + selected_modulo.getCurso() + " (Código: " + selected_modulo.getId() + ")");
+        text_alumnos_modulo.setText(text_alumnos_modulo.getText() + selected_modulo.getNombre() + " " + selected_modulo.getCurso() + "\n(Código: " + selected_modulo.getId() + ")");
         firebaseDatabase = FirebaseDatabase.getInstance();
         databaseReference = firebaseDatabase.getReference().child("alumnos");
         query = databaseReference.orderByChild("id_modulo").equalTo(selected_modulo.getId());
@@ -237,7 +307,7 @@ public class SecondActivity extends AppCompatActivity implements DialogoAlumnoCr
         databaseReference.push().setValue(alumno);
         databaseReference1.push().setValue(semaforoSaberHacer);
         databaseReference2.push().setValue(semaforoSaberEstar);
-        contador++;
+
         adapter.notifyDataSetChanged();
     }
 
