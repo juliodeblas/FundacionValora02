@@ -1,12 +1,18 @@
 package com.example.fundacionvalora02;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
 
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 
 import com.example.fundacionvalora02.fragments.AdaptadorFragments;
 import com.example.fundacionvalora02.fragments.FragmentDos;
@@ -14,6 +20,7 @@ import com.example.fundacionvalora02.fragments.FragmentTres;
 import com.example.fundacionvalora02.fragments.FragmentUno;
 import com.example.fundacionvalora02.utils.Alumno;
 import com.google.android.material.tabs.TabLayout;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -22,11 +29,11 @@ import java.util.ArrayList;
 public class DetalleAlumnoActivity extends AppCompatActivity {
 
     Bundle bundle;
-    Bundle bundle_semaforo;
     ViewPager viewPager;
     TabLayout tabLayout;
     AdaptadorFragments adaptadorFragments;
     ArrayList<Fragment> listaFragments;
+    Toolbar toolbar;
 
     public static Alumno selected_alumno;
     public static String selected_key_alumno;
@@ -95,8 +102,39 @@ public class DetalleAlumnoActivity extends AppCompatActivity {
         viewPager = findViewById(R.id.view_pager);
         tabLayout = findViewById(R.id.tab_layout);
         tabLayout.setupWithViewPager(viewPager);
+        toolbar = findViewById(R.id.toolbar_detalle);
+        setSupportActionBar(toolbar);
         database = FirebaseDatabase.getInstance();
         reference = database.getReference("semaforos_saber_hacer");
         reference1 = database.getReference("semaforos_saber_estar");
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_others, menu);
+
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.menu_logout_others:
+                FirebaseAuth.getInstance().signOut();
+                Intent intent = new Intent(DetalleAlumnoActivity.this, LoginActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
+
+                break;
+            case R.id.menu_home_others:
+                Intent intent1 = new Intent(DetalleAlumnoActivity.this, MainActivity.class);
+                intent1.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent1);
+
+                break;
+        }
+
+        return true;
     }
 }

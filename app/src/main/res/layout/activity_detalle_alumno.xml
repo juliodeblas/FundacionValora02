@@ -4,8 +4,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".DetalleAlumnoActivity"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    tools:context=".DetalleAlumnoActivity">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar_detalle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary"
+        app:titleTextColor="@color/blanco"></androidx.appcompat.widget.Toolbar>
 
     <include layout="@layout/main_content"></include>
 
