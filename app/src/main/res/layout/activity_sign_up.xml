@@ -67,7 +67,7 @@
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
             android:layout_marginBottom="30dp"
-            android:hint="Password"
+            android:hint="Contraseña"
             android:background="@drawable/rounded_edittext"
             android:drawablePadding="20dp"
             android:paddingLeft="10dp"
@@ -80,7 +80,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="Sign up"
+            android:padding="10dp"
+            android:text="Registrarse"
             android:background="@drawable/rounded_edittext"
             android:textColor="@color/colorPrimaryDark"></Button>
 
@@ -89,7 +90,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/blanco"
-            android:text="¿Ya tienes cuenta? Login"
+            android:text="¿Ya tienes cuenta? Inicia sesión"
             android:layout_gravity="center"
             android:textSize="20sp"></TextView>
     </LinearLayout>
