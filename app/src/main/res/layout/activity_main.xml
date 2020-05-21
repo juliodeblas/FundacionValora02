@@ -78,7 +78,10 @@
                         android:layout_height="wrap_content"
                         android:hint="Nombre del modulo"
                         android:textSize="20dp"
-                        android:inputType="textCapSentences"></EditText>
+                        android:inputType="textCapSentences"
+                        android:drawableLeft="@drawable/nombre_modulo"
+                        android:drawablePadding="10dp"
+                        android:padding="10dp"></EditText>
 
                     <EditText
                         android:id="@+id/edit_curso"
@@ -86,7 +89,10 @@
                         android:layout_height="wrap_content"
                         android:hint="Curso académico (Ej: 19/20)"
                         android:textSize="20dp"
-                        android:inputType="date"></EditText>
+                        android:inputType="date"
+                        android:drawableLeft="@drawable/ic_calendar"
+                        android:drawablePadding="10dp"
+                        android:padding="10dp"></EditText>
 
                 </LinearLayout>
 

@@ -17,35 +17,50 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Introduce nombre"
-        android:inputType="textCapSentences"/>
+        android:inputType="textCapSentences"
+        android:drawableLeft="@drawable/nombre_modulo"
+        android:drawablePadding="10dp"
+        android:padding="10dp"/>
 
     <EditText
         android:id="@+id/edit_apellidos_dialogo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Introduce apellidos"
-        android:inputType="textCapSentences" />
+        android:inputType="textCapSentences"
+        android:drawableLeft="@drawable/ic_wireframe"
+        android:drawablePadding="10dp"
+        android:padding="10dp"/>
 
     <EditText
         android:id="@+id/edit_numero_dialogo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Introduce número"
-        android:inputType="number"/>
+        android:inputType="number"
+        android:drawableLeft="@drawable/ic_number"
+        android:drawablePadding="10dp"
+        android:padding="10dp"/>
 
     <EditText
         android:id="@+id/edit_perfil_dialogo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Introduce perfil"
-        android:inputType="textCapSentences"/>
+        android:inputType="textCapSentences"
+        android:drawableLeft="@drawable/ic_resume"
+        android:drawablePadding="10dp"
+        android:padding="10dp"/>
 
     <EditText
         android:id="@+id/edit_grupo_dialogo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Introduce grupo"
-        android:inputType="textCapSentences"/>
+        android:inputType="textCapSentences"
+        android:drawableLeft="@drawable/ic_employee"
+        android:drawablePadding="10dp"
+        android:padding="10dp"/>
 
     <EditText
         android:id="@+id/edit_id_dialogo"
@@ -58,6 +73,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="CREAR"
-        android:layout_margin="10dp"/>
+        android:layout_margin="10dp"
+        android:background="@drawable/rounded_item_azul"/>
 
 </LinearLayout>

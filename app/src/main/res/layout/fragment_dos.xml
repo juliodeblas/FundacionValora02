@@ -24,7 +24,7 @@
         <ImageButton
             android:id="@+id/imagebutton_semaforo_saber_hacer"
             android:layout_width="150dp"
-            android:layout_height="0dp"
+            android:layout_height="30dp"
             android:layout_gravity="center"
             android:layout_marginTop="10dp"
             android:layout_weight="0.1"
