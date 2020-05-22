@@ -26,9 +26,12 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.DateFormat;
+import java.util.Calendar;
+
 public class DialogoSemaforoSaberHacer extends DialogFragment {
 
-    TextView text_conseguido, text_en_proceso, text_no_conseguido, text_faltas, text_faltas_justificadas;
+    TextView text_conseguido, text_en_proceso, text_no_conseguido, text_faltas, text_faltas_justificadas, text_fecha;
     TextView text_n_conseguido, text_n_en_proceso, text_n_no_conseguido, text_n_faltas, text_n_faltas_justificadas;
     ImageButton button_mas_conseguido, button_menos_conseguido, button_mas_en_proceso, button_menos_en_proceso, button_mas_no_conseguido, button_menos_no_conseguido;
     ImageButton button_mas_faltas, button_menos_faltas, button_mas_faltas_justificadas, button_menos_faltas_justificadas;
@@ -190,6 +193,10 @@ public class DialogoSemaforoSaberHacer extends DialogFragment {
         text_n_no_conseguido = vista.findViewById(R.id.text_numero_no_conseguido_saber_hacer);
         text_n_faltas = vista.findViewById(R.id.text_numero_faltas_saber_hacer);
         text_n_faltas_justificadas = vista.findViewById(R.id.text_numero_faltas_justificadas_saber_hacer);
+        text_fecha = vista.findViewById(R.id.text_fecha_sh);
+        Calendar calendar = Calendar.getInstance();
+        String fecha = DateFormat.getDateInstance().format(calendar.getTime());
+        text_fecha.setText(fecha);
 
         database = FirebaseDatabase.getInstance();
         reference = database.getReference();
