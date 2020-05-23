@@ -15,8 +15,10 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
+import androidx.fragment.app.Fragment;
 
 import com.example.fundacionvalora02.R;
+import com.example.fundacionvalora02.fragments.FragmentTres;
 import com.example.fundacionvalora02.utils.Alumno;
 import com.example.fundacionvalora02.utils.SemaforoSaberEstar;
 import com.example.fundacionvalora02.utils.SemaforoSaberHacer;
@@ -165,7 +167,7 @@ public class DialogoSemaforoSaberHacer extends DialogFragment {
             @Override
             public void onClick(View v) {
                 onSemaforoSelected.semaforoSaberHacerListener(semaforoSaberHacer);
-                getDialog().dismiss();
+                dismiss();
             }
         });
         vista.invalidate();

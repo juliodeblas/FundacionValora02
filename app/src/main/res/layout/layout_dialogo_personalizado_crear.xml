@@ -3,79 +3,79 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="30dp"
-    android:orientation="vertical"
-    android:background="@color/light_white">
+    android:background="@color/light_white"
+    android:orientation="vertical">
 
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="40dp"
-        android:src="@drawable/valora"
-        android:layout_margin="10dp"></ImageView>
+        android:layout_margin="10dp"
+        android:src="@drawable/valora"></ImageView>
 
     <EditText
         android:id="@+id/edit_nombre_dialogo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Introduce nombre"
-        android:inputType="textCapSentences"
         android:drawableLeft="@drawable/nombre_modulo"
         android:drawablePadding="10dp"
-        android:padding="10dp"/>
+        android:hint="Introduce nombre"
+        android:inputType="textCapSentences"
+        android:padding="10dp" />
 
     <EditText
         android:id="@+id/edit_apellidos_dialogo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Introduce apellidos"
-        android:inputType="textCapSentences"
         android:drawableLeft="@drawable/ic_wireframe"
         android:drawablePadding="10dp"
-        android:padding="10dp"/>
+        android:hint="Introduce apellidos"
+        android:inputType="textCapSentences"
+        android:padding="10dp" />
 
     <EditText
         android:id="@+id/edit_numero_dialogo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Introduce número"
-        android:inputType="number"
         android:drawableLeft="@drawable/ic_number"
         android:drawablePadding="10dp"
-        android:padding="10dp"/>
+        android:hint="Introduce número"
+        android:inputType="number"
+        android:padding="10dp" />
 
     <EditText
         android:id="@+id/edit_perfil_dialogo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Introduce perfil"
-        android:inputType="textMultiLine"
         android:drawableLeft="@drawable/ic_resume"
         android:drawablePadding="10dp"
-        android:padding="10dp"
+        android:gravity="top"
+        android:hint="Introduce perfil"
+        android:inputType="textMultiLine|textCapSentences"
         android:lines="3"
-        android:gravity="top"/>
+        android:padding="10dp" />
 
     <EditText
         android:id="@+id/edit_grupo_dialogo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Introduce grupo"
-        android:inputType="textCapSentences"
         android:drawableLeft="@drawable/ic_employee"
         android:drawablePadding="10dp"
-        android:padding="10dp"/>
+        android:hint="Introduce grupo"
+        android:inputType="textCapSentences"
+        android:padding="10dp" />
 
     <EditText
         android:id="@+id/edit_id_dialogo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:enabled="false"/>
+        android:enabled="false" />
 
     <Button
         android:id="@+id/button_crear_dialogo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="CREAR"
         android:layout_margin="10dp"
-        android:background="@drawable/rounded_item_azul"/>
+        android:background="@drawable/rounded_item_azul"
+        android:text="CREAR" />
 
 </LinearLayout>

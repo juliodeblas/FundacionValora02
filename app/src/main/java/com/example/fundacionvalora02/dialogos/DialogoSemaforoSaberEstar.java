@@ -163,7 +163,7 @@ public class DialogoSemaforoSaberEstar extends DialogFragment {
             @Override
             public void onClick(View v) {
                 onSemaforoSESelected.semaforoSaberEstarListener(semaforoSaberEstar);
-                getDialog().dismiss();
+                dismiss();
             }
         });
     }

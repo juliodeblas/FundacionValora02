@@ -175,20 +175,34 @@ public class SecondActivity extends AppCompatActivity implements DialogoAlumnoCr
                     dialog.setPositiveButton("SI", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            databaseReference.child(selected_key_alumno).removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
+                            AlertDialog.Builder dialog1 = new AlertDialog.Builder(SecondActivity.this);
+                            dialog1.setTitle("¿Estás realmente seguro que quieres continuar?");
+                            dialog1.setMessage("Se eliminarán también los semáforos asociados al alumno.");
+                            dialog1.setPositiveButton("SI", new DialogInterface.OnClickListener() {
                                 @Override
-                                public void onSuccess(Void aVoid) {
-                                    Toast.makeText(SecondActivity.this, "¡Borrado correctamente!", Toast.LENGTH_SHORT).show();
+                                public void onClick(DialogInterface dialog, int which) {
+                                    databaseReference.child(selected_key_alumno).removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
+                                        @Override
+                                        public void onSuccess(Void aVoid) {
+                                            Toast.makeText(SecondActivity.this, "¡Borrado correctamente!", Toast.LENGTH_SHORT).show();
 
 
+                                        }
+                                    }).addOnFailureListener(new OnFailureListener() {
+                                        @Override
+                                        public void onFailure(@NonNull Exception e) {
+                                            Toast.makeText(SecondActivity.this, "" + e.getMessage(), Toast.LENGTH_SHORT).show();
+                                        }
+                                    });
                                 }
-                            }).addOnFailureListener(new OnFailureListener() {
+                            }).setNegativeButton("NO", new DialogInterface.OnClickListener() {
                                 @Override
-                                public void onFailure(@NonNull Exception e) {
-                                    Toast.makeText(SecondActivity.this, "" + e.getMessage(), Toast.LENGTH_SHORT).show();
+                                public void onClick(DialogInterface dialog, int which) {
+
                                 }
                             });
-
+                            dialog1.create();
+                            dialog1.show();
                         }
                     }).setNegativeButton("NO", new DialogInterface.OnClickListener() {
                         @Override

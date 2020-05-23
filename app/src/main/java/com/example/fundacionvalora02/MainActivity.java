@@ -91,10 +91,10 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-                        for (DataSnapshot item: dataSnapshot.getChildren()){
+                        for (DataSnapshot item : dataSnapshot.getChildren()) {
                             Alumno alumno = item.getValue(Alumno.class);
 
-                            if (modulo.getId().equals(alumno.getId_modulo())){
+                            if (modulo.getId().equals(alumno.getId_modulo())) {
                                 String key = item.getKey();
                                 databaseReference1.child(key).removeValue();
                             }
@@ -128,10 +128,10 @@ public class MainActivity extends AppCompatActivity {
                             @Override
                             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-                                for (DataSnapshot item: dataSnapshot.getChildren()){
+                                for (DataSnapshot item : dataSnapshot.getChildren()) {
                                     SemaforoSaberHacer semaforo = item.getValue(SemaforoSaberHacer.class);
 
-                                    if (alumno.getId().equals(semaforo.getId_alumno())){
+                                    if (alumno.getId().equals(semaforo.getId_alumno())) {
                                         String key = item.getKey();
                                         databaseReference2.child(key).removeValue();
                                     }
@@ -150,10 +150,10 @@ public class MainActivity extends AppCompatActivity {
                             @Override
                             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-                                for (DataSnapshot item: dataSnapshot.getChildren()){
+                                for (DataSnapshot item : dataSnapshot.getChildren()) {
                                     SemaforoSaberEstar semaforo = item.getValue(SemaforoSaberEstar.class);
 
-                                    if (alumno.getId().equals(semaforo.getId_alumno())){
+                                    if (alumno.getId().equals(semaforo.getId_alumno())) {
                                         String key = item.getKey();
                                         databaseReference3.child(key).removeValue();
                                     }
@@ -243,18 +243,32 @@ public class MainActivity extends AppCompatActivity {
                     dialog.setPositiveButton("SI", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            databaseReference.child(selected_key_modulo).removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
+                            AlertDialog.Builder dialog1 = new AlertDialog.Builder(MainActivity.this);
+                            dialog1.setTitle("¿Estás realmente seguro que quieres continuar?");
+                            dialog1.setMessage("Se eliminarán también los alumnos y semáforos asociados al módulo.");
+                            dialog1.setPositiveButton("SI", new DialogInterface.OnClickListener() {
                                 @Override
-                                public void onSuccess(Void aVoid) {
-                                    Toast.makeText(MainActivity.this, "¡Borrado correctamente!", Toast.LENGTH_SHORT).show();
+                                public void onClick(DialogInterface dialog, int which) {
+                                    databaseReference.child(selected_key_modulo).removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
+                                        @Override
+                                        public void onSuccess(Void aVoid) {
+                                            Toast.makeText(MainActivity.this, "¡Borrado correctamente!", Toast.LENGTH_SHORT).show();
+                                        }
+                                    }).addOnFailureListener(new OnFailureListener() {
+                                        @Override
+                                        public void onFailure(@NonNull Exception e) {
+                                            Toast.makeText(MainActivity.this, "" + e.getMessage(), Toast.LENGTH_SHORT).show();
+                                        }
+                                    });
                                 }
-                            }).addOnFailureListener(new OnFailureListener() {
+                            }).setNegativeButton("NO", new DialogInterface.OnClickListener() {
                                 @Override
-                                public void onFailure(@NonNull Exception e) {
-                                    Toast.makeText(MainActivity.this, "" + e.getMessage(), Toast.LENGTH_SHORT).show();
+                                public void onClick(DialogInterface dialog, int which) {
+
                                 }
                             });
-
+                            dialog1.create();
+                            dialog1.show();
                         }
                     }).setNegativeButton("NO", new DialogInterface.OnClickListener() {
                         @Override
@@ -282,7 +296,7 @@ public class MainActivity extends AppCompatActivity {
     private void crearModulo() {
         String nombre = edit_nombre.getText().toString();
         String curso = edit_curso.getText().toString();
-        String id = generadoralfanumericos(10);
+        String id = generadorAlfanumerico(10);
 
         Modulo modulo = new Modulo(nombre, curso, id);
 
@@ -371,7 +385,7 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
-    public String generadoralfanumericos(int length) {
+    public String generadorAlfanumerico(int length) {
         StringBuilder builder = new StringBuilder();
 
         for (int i = 0; i < length; i++) {
