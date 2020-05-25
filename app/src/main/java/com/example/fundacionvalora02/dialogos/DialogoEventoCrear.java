@@ -18,6 +18,7 @@ import androidx.fragment.app.DialogFragment;
 import com.example.fundacionvalora02.R;
 import com.example.fundacionvalora02.utils.Evento;
 
+import java.util.Calendar;
 import java.util.Random;
 
 public class DialogoEventoCrear extends DialogFragment {
@@ -30,10 +31,12 @@ public class DialogoEventoCrear extends DialogFragment {
     View vista;
     String fecha;
     String letters = "abcdefghijklmnopqrstuvwxyz";
+    Calendar clicked_day_calendar;
+
     char[] alfanumerico = (letters + letters.toUpperCase() + "0123456789").toCharArray();
 
-    public DialogoEventoCrear(String fecha) {
-        this.fecha = fecha;
+    public DialogoEventoCrear(Calendar calendar) {
+        this.clicked_day_calendar = calendar;
     }
 
     @Override
@@ -68,8 +71,10 @@ public class DialogoEventoCrear extends DialogFragment {
                     String titulo = nombreEvento.getText().toString();
                     String descripcion = nombreEvento.getText().toString();
                     String[] listaDatos = fecha.split(" ");
+                    fecha = clicked_day_calendar.getTime().toString();
                     String id = generadorAlfanumerico(10);
-                    Evento evento = new Evento(id, titulo, descripcion, listaDatos[0], listaDatos[2], listaDatos[1], listaDatos[5]);
+                    Long milisegundos = clicked_day_calendar.getTimeInMillis();
+                    Evento evento = new Evento(id, titulo, descripcion, listaDatos[0], listaDatos[2], listaDatos[1], listaDatos[5], milisegundos);
                     listener.onDialogoSelected(evento);
                     dismiss();
                 } else {
@@ -86,10 +91,9 @@ public class DialogoEventoCrear extends DialogFragment {
         descripcionEvento = vista.findViewById(R.id.decripcionEvento);
         crearEvento = vista.findViewById(R.id.crearEvento);
         fechaEvento.setEnabled(false);
+        fecha = clicked_day_calendar.getTime().toString();
         String[] listaDatos1 = fecha.split(" ");
         fechaEvento.setText(listaDatos1[2] + "/" + listaDatos1[1] + "/" + listaDatos1[5]);
-
-
     }
 
     public String generadorAlfanumerico(int length) {

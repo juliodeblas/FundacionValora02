@@ -26,7 +26,8 @@
             android:id="@+id/calendar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:headerColor="@color/colorPrimary"></com.applandeo.materialcalendarview.CalendarView>
+            app:headerColor="@color/colorPrimary"
+            app:todayLabelColor="@color/colorPrimary"></com.applandeo.materialcalendarview.CalendarView>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler_calendario"

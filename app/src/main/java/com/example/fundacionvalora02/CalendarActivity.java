@@ -36,7 +36,12 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
+import java.util.Locale;
 
 public class CalendarActivity extends AppCompatActivity implements DialogoEventoCrear.OnDialogoPersoListener {
 
@@ -47,6 +52,7 @@ public class CalendarActivity extends AppCompatActivity implements DialogoEvento
     FirebaseRecyclerOptions<Evento> options;
     FirebaseRecyclerAdapter<Evento, MyRecyclerViewHolder3> adapter;
     Toolbar toolbar;
+    List<EventDay> events;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +60,25 @@ public class CalendarActivity extends AppCompatActivity implements DialogoEvento
         setContentView(R.layout.activity_calendar);
         instancias();
         acciones();
+
+        reference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot item : dataSnapshot.getChildren()) {
+                    Evento evento1 = item.getValue(Evento.class);
+                    Date date = new Date(evento1.getTime());
+                    Calendar calendar = Calendar.getInstance();
+                    calendar.setTime(date);
+                    events.add(new EventDay(calendar, R.drawable.chincheta));
+                    calendarView.setEvents(events);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
     }
 
     private void acciones() {
@@ -61,14 +86,14 @@ public class CalendarActivity extends AppCompatActivity implements DialogoEvento
             @Override
             public void onDayClick(EventDay eventDay) {
                 Calendar clicked_day_calendar = eventDay.getCalendar();
-                String fecha = clicked_day_calendar.getTime().toString();
-                DialogoEventoCrear dialogoEventoCrear = new DialogoEventoCrear(fecha);
+                DialogoEventoCrear dialogoEventoCrear = new DialogoEventoCrear(clicked_day_calendar);
                 dialogoEventoCrear.show(getSupportFragmentManager(), "dialogo");
             }
         });
     }
 
     private void instancias() {
+        events = new ArrayList<>();
         calendarView = findViewById(R.id.calendar);
         calendarView.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
         recyclerView = findViewById(R.id.recycler_calendario);
@@ -128,6 +153,8 @@ public class CalendarActivity extends AppCompatActivity implements DialogoEvento
                                                     @Override
                                                     public void onSuccess(Void aVoid) {
                                                         Toast.makeText(CalendarActivity.this, "¡Borrado correctamente!", Toast.LENGTH_SHORT).show();
+                                                        finish();
+                                                        startActivity(getIntent());
                                                     }
                                                 });
                                                 adapter.notifyDataSetChanged();

@@ -55,6 +55,6 @@
         android:layout_height="wrap_content"
         android:text="Añadir evento"
         android:layout_margin="10dp"
-        android:background="@drawable/rounded_item_amarillo"/>
+        android:background="@drawable/rounded_item_rojo"/>
 
 </LinearLayout>

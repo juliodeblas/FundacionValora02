@@ -8,8 +8,9 @@ public class Evento {
     private String diaMes;
     private String mes;
     private String año;
+    private Long time;
 
-    public Evento(String id, String tituloEvento, String descripcionEvento, String diaSemana, String diaMes, String mes, String año) {
+    public Evento(String id, String tituloEvento, String descripcionEvento, String diaSemana, String diaMes, String mes, String año, Long time) {
         this.id = id;
         this.tituloEvento = tituloEvento;
         this.descripcionEvento = descripcionEvento;
@@ -17,6 +18,7 @@ public class Evento {
         this.diaMes = diaMes;
         this.mes = mes;
         this.año = año;
+        this.time = time;
     }
 
     public Evento(String diaSemana, String diaMes, String mes, String año) {
@@ -84,6 +86,14 @@ public class Evento {
 
     public void setAño(String año) {
         this.año = año;
+    }
+
+    public Long getTime() {
+        return time;
+    }
+
+    public void setTime(Long time) {
+        this.time = time;
     }
 
     @Override
