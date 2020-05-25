@@ -39,7 +39,6 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-
 import java.util.Random;
 
 public class MainActivity extends AppCompatActivity {
@@ -292,7 +291,6 @@ public class MainActivity extends AppCompatActivity {
         displayModulo();
     }
 
-
     private void crearModulo() {
         String nombre = edit_nombre.getText().toString();
         String curso = edit_curso.getText().toString();
@@ -379,6 +377,10 @@ public class MainActivity extends AppCompatActivity {
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
 
+                break;
+            case R.id.menu_calendario_main:
+                Intent intent2 = new Intent(MainActivity.this, CalendarActivity.class);
+                startActivity(intent2);
                 break;
         }
 

@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="30dp"
+    android:orientation="vertical"
+    android:background="@drawable/rounded_item_blanco">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:src="@drawable/valora"
+        android:layout_margin="10dp"></ImageView>
+
+    <EditText
+        android:paddingBottom="20dp"
+        android:id="@+id/nombreEvento"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Introduce nombre del evento"
+        android:inputType="textCapSentences"
+        android:drawableLeft="@drawable/nombre_modulo"
+        android:drawablePadding="10dp"
+        android:padding="10dp"/>
+
+
+
+    <EditText
+        android:id="@+id/fechaEvento"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        android:inputType="number"
+        android:drawableLeft="@drawable/ic_calendar"
+        android:drawablePadding="10dp"
+        android:padding="10dp"/>
+
+    <EditText
+        android:id="@+id/decripcionEvento"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Introduce descripcion del evento"
+        android:inputType="textMultiLine|textCapSentences"
+        android:drawableLeft="@drawable/ic_resume"
+        android:drawablePadding="10dp"
+        android:padding="10dp"
+        android:lines="5"
+        android:gravity="top"/>
+
+
+
+    <Button
+        android:id="@+id/crearEvento"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Añadir evento"
+        android:layout_margin="10dp"
+        android:background="@drawable/rounded_item_amarillo"/>
+
+</LinearLayout>

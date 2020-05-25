@@ -133,6 +133,10 @@ public class DetalleAlumnoActivity extends AppCompatActivity {
                 startActivity(intent1);
 
                 break;
+            case R.id.menu_calendario_others:
+                Intent intent2 = new Intent(DetalleAlumnoActivity.this, CalendarActivity.class);
+                startActivity(intent2);
+                break;
         }
 
         return true;

@@ -43,6 +43,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.Calendar;
+
 public class SecondActivity extends AppCompatActivity implements DialogoAlumnoCrear.OnDialogoPersoListener, DialogoAlumnoActualizar.OnDialogoPersoListener {
 
     Bundle bundle;
@@ -354,6 +356,10 @@ public class SecondActivity extends AppCompatActivity implements DialogoAlumnoCr
                 intent1.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent1);
 
+                break;
+            case R.id.menu_calendario_others:
+                Intent intent2 = new Intent(SecondActivity.this, CalendarActivity.class);
+                startActivity(intent2);
                 break;
         }
 

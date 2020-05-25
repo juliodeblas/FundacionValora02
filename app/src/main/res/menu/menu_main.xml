@@ -5,4 +5,8 @@
         android:id="@+id/menu_logout_main"
         android:title="Cerrar sesión"></item>
 
+    <item
+        android:id="@+id/menu_calendario_main"
+        android:title="Calendario de eventos"></item>
+
 </menu>
