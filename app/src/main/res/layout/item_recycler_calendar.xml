@@ -13,7 +13,7 @@
         android:layout_height="match_parent"
         android:layout_weight="0.75"
         android:text="Examen de matemáticas"
-        android:textSize="20sp"
+        android:textSize="19sp"
         android:layout_margin="10dp"
         android:gravity="center"
         android:layout_gravity="center"
