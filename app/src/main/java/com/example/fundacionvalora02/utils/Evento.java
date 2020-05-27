@@ -21,14 +21,6 @@ public class Evento {
         this.time = time;
     }
 
-    public Evento(String diaSemana, String diaMes, String mes, String año) {
-        this.diaSemana = diaSemana;
-        this.diaMes = diaMes;
-        this.mes = mes;
-        this.año = año;
-    }
-
-
     public Evento() {
     }
 

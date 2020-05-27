@@ -1,6 +1,7 @@
 package com.example.fundacionvalora02;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -30,6 +31,7 @@ import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -72,6 +74,33 @@ public class CalendarActivity extends AppCompatActivity implements DialogoEvento
                     events.add(new EventDay(calendar, R.drawable.chincheta));
                     calendarView.setEvents(events);
                 }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+        reference.addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+            }
+
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+            }
+
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
             }
 
             @Override
@@ -142,31 +171,46 @@ public class CalendarActivity extends AppCompatActivity implements DialogoEvento
                         builder.setPositiveButton("ELIMINAR", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                reference.addValueEventListener(new ValueEventListener() {
+                                AlertDialog.Builder builder1 = new AlertDialog.Builder(CalendarActivity.this);
+                                builder1.setTitle("¿Estás realmente seguro que quieres continuar?");
+                                builder1.setMessage("Se eliminará el evento definitivamente.");
+                                builder1.setPositiveButton("SI", new DialogInterface.OnClickListener() {
                                     @Override
-                                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                        for (DataSnapshot item : dataSnapshot.getChildren()) {
-                                            Evento evento = item.getValue(Evento.class);
-                                            if (evento.getId().equals(model.getId())) {
-                                                String key = item.getKey();
-                                                reference.child(key).removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
-                                                    @Override
-                                                    public void onSuccess(Void aVoid) {
-                                                        Toast.makeText(CalendarActivity.this, "¡Borrado correctamente!", Toast.LENGTH_SHORT).show();
-                                                        finish();
-                                                        startActivity(getIntent());
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        reference.addValueEventListener(new ValueEventListener() {
+                                            @Override
+                                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                                for (DataSnapshot item : dataSnapshot.getChildren()) {
+                                                    Evento evento = item.getValue(Evento.class);
+                                                    if (evento.getId().equals(model.getId())) {
+                                                        String key = item.getKey();
+                                                        reference.child(key).removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                            @Override
+                                                            public void onSuccess(Void aVoid) {
+                                                                Toast.makeText(CalendarActivity.this, "¡Borrado correctamente!", Toast.LENGTH_SHORT).show();
+                                                                finish();
+                                                                startActivity(getIntent());
+                                                            }
+                                                        });
+                                                        adapter.notifyDataSetChanged();
                                                     }
-                                                });
-                                                adapter.notifyDataSetChanged();
+                                                }
                                             }
-                                        }
-                                    }
 
+                                            @Override
+                                            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                                            }
+                                        });
+                                    }
+                                }).setNegativeButton("NO", new DialogInterface.OnClickListener() {
                                     @Override
-                                    public void onCancelled(@NonNull DatabaseError databaseError) {
+                                    public void onClick(DialogInterface dialog, int which) {
 
                                     }
                                 });
+                                builder1.create();
+                                builder1.show();
                             }
                         }).setNegativeButton("VER DETALLES", new DialogInterface.OnClickListener() {
                             @Override

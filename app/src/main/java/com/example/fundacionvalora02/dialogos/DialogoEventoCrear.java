@@ -69,7 +69,7 @@ public class DialogoEventoCrear extends DialogFragment {
                 if (!nombreEvento.getText().toString().matches("") && !fechaEvento.getText().toString().matches("") &&
                         !descripcionEvento.getText().toString().matches("")) {
                     String titulo = nombreEvento.getText().toString();
-                    String descripcion = nombreEvento.getText().toString();
+                    String descripcion = descripcionEvento.getText().toString();
                     String[] listaDatos = fecha.split(" ");
                     fecha = clicked_day_calendar.getTime().toString();
                     String id = generadorAlfanumerico(10);
