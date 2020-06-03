@@ -2,16 +2,14 @@ package com.example.fundacionvalora02.utils;
 
 public class Timestampp {
 
-    String id_alumno, nombre, apellidos;
+    String id_modulo;
     int conseguido, en_proceso, no_conseguido, faltas, faltas_justificadas;
 
     public Timestampp() {
     }
 
-    public Timestampp(String id_alumno, String nombre, String apellidos, int conseguido, int en_proceso, int no_conseguido, int faltas, int faltas_justificadas) {
-        this.id_alumno = id_alumno;
-        this.nombre = nombre;
-        this.apellidos = apellidos;
+    public Timestampp(String id_modulo, int conseguido, int en_proceso, int no_conseguido, int faltas, int faltas_justificadas) {
+        this.id_modulo = id_modulo;
         this.conseguido = conseguido;
         this.en_proceso = en_proceso;
         this.no_conseguido = no_conseguido;
@@ -19,28 +17,12 @@ public class Timestampp {
         this.faltas_justificadas = faltas_justificadas;
     }
 
-    public String getId_alumno() {
-        return id_alumno;
+    public String getId_modulo() {
+        return id_modulo;
     }
 
-    public void setId_alumno(String id_alumno) {
-        this.id_alumno = id_alumno;
-    }
-
-    public String getNombre() {
-        return nombre;
-    }
-
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
-
-    public String getApellidos() {
-        return apellidos;
-    }
-
-    public void setApellidos(String apellidos) {
-        this.apellidos = apellidos;
+    public void setId_modulo(String id_modulo) {
+        this.id_modulo = id_modulo;
     }
 
     public int getConseguido() {

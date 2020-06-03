@@ -77,7 +77,7 @@ public class FragmentTres extends Fragment implements DialogoSemaforoSaberEstar.
         Calendar calendar = Calendar.getInstance();
         String fecha = DateFormat.getDateInstance().format(calendar.getTime());
         String fecha_sin_punto = fecha.replace(".", "");
-        reference1 = database.getReference(fecha_sin_punto + " - " + selected_alumno.getNombre() + " " + selected_alumno.getApellidos()+ " - Saber Estar");
+        reference1 = database.getReference(fecha_sin_punto + " - " + selected_alumno.getNombre() + " " + selected_alumno.getApellidos() + " - Saber Estar");
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -142,8 +142,7 @@ public class FragmentTres extends Fragment implements DialogoSemaforoSaberEstar.
     @Override
     public void semaforoSaberEstarListener(SemaforoSaberEstar semaforo) {
         reference.child(selected_key_semaforo_saber_estar).setValue(semaforo);
-        Timestampp timestampp = new Timestampp(selected_alumno.getId(), selected_alumno.getNombre(), selected_alumno.getApellidos(),
-                semaforo.getConseguido(), semaforo.getEn_proceso(), semaforo.getNo_conseguido(), semaforo.getFalta(), semaforo.getFalta_justificada());
+        Timestampp timestampp = new Timestampp(selected_alumno.getId(), semaforo.getConseguido(), semaforo.getEn_proceso(), semaforo.getNo_conseguido(), semaforo.getFalta(), semaforo.getFalta_justificada());
         reference1.push().setValue(timestampp);
         pieChart.notifyDataSetChanged();
     }
