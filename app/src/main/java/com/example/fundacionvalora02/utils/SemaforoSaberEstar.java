@@ -6,17 +6,19 @@ public class SemaforoSaberEstar implements Serializable {
 
     int no_conseguido, conseguido, en_proceso, falta, falta_justificada;
     String id_alumno;
+    String fecha;
 
     public SemaforoSaberEstar() {
     }
 
-    public SemaforoSaberEstar(int no_conseguido, int conseguido, int en_proceso, int falta, int falta_justificada, String id_alumno) {
+    public SemaforoSaberEstar(int no_conseguido, int conseguido, int en_proceso, int falta, int falta_justificada, String id_alumno, String fecha) {
         this.no_conseguido = no_conseguido;
         this.conseguido = conseguido;
         this.en_proceso = en_proceso;
         this.falta = falta;
         this.falta_justificada = falta_justificada;
         this.id_alumno = id_alumno;
+        this.fecha = fecha;
     }
 
     public int getNo_conseguido() {
@@ -65,5 +67,13 @@ public class SemaforoSaberEstar implements Serializable {
 
     public void setId_alumno(String id_alumno) {
         this.id_alumno = id_alumno;
+    }
+
+    public String getFecha() {
+        return fecha;
+    }
+
+    public void setFecha(String fecha) {
+        this.fecha = fecha;
     }
 }

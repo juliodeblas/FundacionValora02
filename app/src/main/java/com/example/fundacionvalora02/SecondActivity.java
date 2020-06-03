@@ -163,7 +163,7 @@ public class SecondActivity extends AppCompatActivity implements DialogoAlumnoCr
                     DialogoAlumnoActualizar dialogoAlumno = new DialogoAlumnoActualizar();
                     dialogoAlumno.show(getSupportFragmentManager(), "perso");
                 } else {
-                    Toast.makeText(getApplicationContext(), "Debe seleccionar un alumno", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Debe seleccionar un alumno.", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -172,7 +172,7 @@ public class SecondActivity extends AppCompatActivity implements DialogoAlumnoCr
             public void onClick(View v) {
                 if (selected_alumno != null) {
                     AlertDialog.Builder dialog = new AlertDialog.Builder(SecondActivity.this);
-                    dialog.setTitle("Confirmar eliminación");
+                    dialog.setTitle("Confirmar eliminación. ");
                     dialog.setMessage("¿Seguro que quieres continuar?");
                     dialog.setPositiveButton("SI", new DialogInterface.OnClickListener() {
                         @Override
@@ -215,7 +215,7 @@ public class SecondActivity extends AppCompatActivity implements DialogoAlumnoCr
                     dialog.create();
                     dialog.show();
                 } else {
-                    Toast.makeText(getApplicationContext(), "Debe seleccionar un alumno", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Debe seleccionar un alumno.", Toast.LENGTH_SHORT).show();
                 }
 
             }

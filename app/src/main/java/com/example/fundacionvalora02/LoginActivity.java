@@ -22,7 +22,7 @@ public class LoginActivity extends AppCompatActivity {
 
     EditText edit_email, edit_password;
     Button button_login;
-    TextView text_login;
+    //TextView text_login;
     ProgressBar progressBar;
 
     FirebaseAuth mAuth;
@@ -42,13 +42,13 @@ public class LoginActivity extends AppCompatActivity {
                 login();
             }
         });
-        text_login.setOnClickListener(new View.OnClickListener() {
+        /*text_login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(LoginActivity.this, SignUpActivity.class);
                 startActivity(intent);
             }
-        });
+        });*/
     }
 
     private void login() {
@@ -56,25 +56,25 @@ public class LoginActivity extends AppCompatActivity {
         String password = edit_password.getText().toString();
 
         if (email.isEmpty()) {
-            edit_email.setError("Debe introducir un email");
+            edit_email.setError("Debe introducir un email.");
             edit_email.requestFocus();
             return;
         }
 
         if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-            edit_email.setError("Debe introducir un email correcto");
+            edit_email.setError("Debe introducir un email correcto.");
             edit_email.requestFocus();
             return;
         }
 
         if (password.isEmpty()) {
-            edit_password.setError("Debe introducir una contraseña");
+            edit_password.setError("Debe introducir una contraseña.");
             edit_password.requestFocus();
             return;
         }
 
         if (password.length() < 6) {
-            edit_password.setError("La contraseña debe tener al menos 6 caracteres");
+            edit_password.setError("La contraseña debe tener al menos 6 caracteres.");
             edit_password.requestFocus();
             return;
         }
@@ -90,7 +90,7 @@ public class LoginActivity extends AppCompatActivity {
                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(intent);
                 }else{
-                    Toast.makeText(getApplicationContext(), "El email o la contraseña no son correctos", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "El email o la contraseña no son correctos.", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -100,7 +100,7 @@ public class LoginActivity extends AppCompatActivity {
         edit_email = findViewById(R.id.edit_email_login);
         edit_password = findViewById(R.id.edit_password_login);
         button_login = findViewById(R.id.button_login);
-        text_login = findViewById(R.id.text_signup);
+        // text_login = findViewById(R.id.text_signup);
         mAuth = FirebaseAuth.getInstance();
         progressBar = findViewById(R.id.progressbar_login);
     }

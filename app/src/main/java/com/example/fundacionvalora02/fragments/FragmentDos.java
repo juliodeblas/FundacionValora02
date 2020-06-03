@@ -15,6 +15,7 @@ import com.example.fundacionvalora02.R;
 import com.example.fundacionvalora02.dialogos.DialogoSemaforoSaberHacer;
 import com.example.fundacionvalora02.utils.Alumno;
 import com.example.fundacionvalora02.utils.SemaforoSaberHacer;
+import com.example.fundacionvalora02.utils.Timestampp;
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.components.Description;
 import com.github.mikephil.charting.data.PieData;
@@ -27,7 +28,9 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 
+import java.text.DateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import static com.github.mikephil.charting.utils.ColorTemplate.rgb;
@@ -42,6 +45,7 @@ public class FragmentDos extends Fragment implements DialogoSemaforoSaberHacer.O
 
     FirebaseDatabase database;
     DatabaseReference reference;
+    DatabaseReference reference1;
 
     private Alumno selected_alumno;
     private String selected_key_alumno;
@@ -71,6 +75,10 @@ public class FragmentDos extends Fragment implements DialogoSemaforoSaberHacer.O
 
         database = FirebaseDatabase.getInstance();
         reference = database.getReference("semaforos_saber_hacer");
+        Calendar calendar = Calendar.getInstance();
+        String fecha = DateFormat.getDateInstance().format(calendar.getTime());
+        String fecha_sin_punto = fecha.replace(".", "");
+        reference1 = database.getReference(fecha_sin_punto + " - " + selected_alumno.getNombre() + " " + selected_alumno.getApellidos()+ " - Saber Hacer");
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -135,6 +143,9 @@ public class FragmentDos extends Fragment implements DialogoSemaforoSaberHacer.O
     @Override
     public void semaforoSaberHacerListener(SemaforoSaberHacer semaforo) {
         reference.child(selected_key_semaforo_saber_hacer).setValue(semaforo);
+        Timestampp timestampp = new Timestampp(selected_alumno.getId(), selected_alumno.getNombre(), selected_alumno.getApellidos(),
+                semaforo.getConseguido(), semaforo.getEn_proceso(), semaforo.getNo_conseguido(), semaforo.getFalta(), semaforo.getFalta_justificada());
+        reference1.push().setValue(timestampp);
         pieChart.notifyDataSetChanged();
     }
 

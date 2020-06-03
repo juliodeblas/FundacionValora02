@@ -15,6 +15,7 @@ import com.example.fundacionvalora02.R;
 import com.example.fundacionvalora02.dialogos.DialogoSemaforoSaberEstar;
 import com.example.fundacionvalora02.utils.Alumno;
 import com.example.fundacionvalora02.utils.SemaforoSaberEstar;
+import com.example.fundacionvalora02.utils.Timestampp;
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.components.Description;
 import com.github.mikephil.charting.data.PieData;
@@ -26,7 +27,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.DateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import static com.github.mikephil.charting.utils.ColorTemplate.rgb;
@@ -46,6 +49,7 @@ public class FragmentTres extends Fragment implements DialogoSemaforoSaberEstar.
 
     FirebaseDatabase database;
     DatabaseReference reference;
+    DatabaseReference reference1;
 
     public FragmentTres() {
 
@@ -70,6 +74,10 @@ public class FragmentTres extends Fragment implements DialogoSemaforoSaberEstar.
 
         database = FirebaseDatabase.getInstance();
         reference = database.getReference("semaforos_saber_estar");
+        Calendar calendar = Calendar.getInstance();
+        String fecha = DateFormat.getDateInstance().format(calendar.getTime());
+        String fecha_sin_punto = fecha.replace(".", "");
+        reference1 = database.getReference(fecha_sin_punto + " - " + selected_alumno.getNombre() + " " + selected_alumno.getApellidos()+ " - Saber Estar");
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -134,6 +142,10 @@ public class FragmentTres extends Fragment implements DialogoSemaforoSaberEstar.
     @Override
     public void semaforoSaberEstarListener(SemaforoSaberEstar semaforo) {
         reference.child(selected_key_semaforo_saber_estar).setValue(semaforo);
+        Timestampp timestampp = new Timestampp(selected_alumno.getId(), selected_alumno.getNombre(), selected_alumno.getApellidos(),
+                semaforo.getConseguido(), semaforo.getEn_proceso(), semaforo.getNo_conseguido(), semaforo.getFalta(), semaforo.getFalta_justificada());
+        reference1.push().setValue(timestampp);
+        pieChart.notifyDataSetChanged();
     }
 
     public static final int[] COLORES_JULIO = {

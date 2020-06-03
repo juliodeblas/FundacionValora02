@@ -12,7 +12,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/colorPrimary"
-        app:titleTextColor="@color/blanco"></androidx.appcompat.widget.Toolbar>
+        app:titleTextColor="@color/blanco"
+        android:scrollbarAlwaysDrawVerticalTrack="true"
+        android:scrollbarStyle="insideOverlay"></androidx.appcompat.widget.Toolbar>
 
     <include layout="@layout/main_content"></include>
 

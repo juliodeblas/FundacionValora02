@@ -166,6 +166,9 @@ public class DialogoSemaforoSaberHacer extends DialogFragment {
         button_actualizar_semaforo_saber_hacer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Calendar calendar = Calendar.getInstance();
+                String fecha = DateFormat.getDateInstance().format(calendar.getTime());
+                semaforoSaberHacer.setFecha(fecha);
                 onSemaforoSelected.semaforoSaberHacerListener(semaforoSaberHacer);
                 dismiss();
             }

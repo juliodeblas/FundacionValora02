@@ -162,6 +162,9 @@ public class DialogoSemaforoSaberEstar extends DialogFragment {
         button_actualizar_semaforo_saber_estar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Calendar calendar = Calendar.getInstance();
+                String fecha = DateFormat.getDateInstance().format(calendar.getTime());
+                semaforoSaberEstar.setFecha(fecha);
                 onSemaforoSESelected.semaforoSaberEstarListener(semaforoSaberEstar);
                 dismiss();
             }

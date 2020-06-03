@@ -21,6 +21,8 @@ import com.example.fundacionvalora02.utils.Alumno;
 import com.example.fundacionvalora02.utils.SemaforoSaberEstar;
 import com.example.fundacionvalora02.utils.SemaforoSaberHacer;
 
+import java.text.DateFormat;
+import java.util.Calendar;
 import java.util.Random;
 
 public class DialogoAlumnoCrear extends DialogFragment {
@@ -71,10 +73,12 @@ public class DialogoAlumnoCrear extends DialogFragment {
                     grupo = edit_grupo.getText().toString();
                     id_modulo = edit_id.getText().toString();
                     String id = generadoralfanumericos(10);
+                    Calendar calendar = Calendar.getInstance();
+                    String fecha = DateFormat.getDateInstance().format(calendar.getTime());
 
                     Alumno alumno = new Alumno(nombre, apellidos, numero, perfil, grupo, id_modulo, id);
-                    SemaforoSaberHacer semaforoSaberHacer = new SemaforoSaberHacer(0, 0, 0, 0, 0, id);
-                    SemaforoSaberEstar semaforoSaberEstar = new SemaforoSaberEstar(0, 0, 0, 0, 0, alumno.getId());
+                    SemaforoSaberHacer semaforoSaberHacer = new SemaforoSaberHacer(0, 0, 0, 0, 0, id, fecha);
+                    SemaforoSaberEstar semaforoSaberEstar = new SemaforoSaberEstar(0, 0, 0, 0, 0, id, fecha);
 
                     listener.onDialogoSelected(alumno, semaforoSaberHacer, semaforoSaberEstar);
                     dismiss();

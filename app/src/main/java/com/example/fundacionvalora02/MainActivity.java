@@ -227,7 +227,7 @@ public class MainActivity extends AppCompatActivity {
                 if (!edit_nombre.getText().toString().matches("") && !edit_curso.getText().toString().matches("")) {
                     crearModulo();
                 } else {
-                    Toast.makeText(getApplicationContext(), "Debe introducir todos los datos", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Debe introducir todos los datos.", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -237,7 +237,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 if (selected_modulo != null) {
                     AlertDialog.Builder dialog = new AlertDialog.Builder(MainActivity.this);
-                    dialog.setTitle("Confirmar eliminación");
+                    dialog.setTitle("Confirmar eliminación.");
                     dialog.setMessage("¿Seguro que quieres continuar?");
                     dialog.setPositiveButton("SI", new DialogInterface.OnClickListener() {
                         @Override
@@ -280,7 +280,7 @@ public class MainActivity extends AppCompatActivity {
                     dialog.create();
                     dialog.show();
                 } else {
-                    Toast.makeText(getApplicationContext(), "Debe seleccionar un módulo", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Debe seleccionar un módulo.", Toast.LENGTH_SHORT).show();
                 }
 
             }
