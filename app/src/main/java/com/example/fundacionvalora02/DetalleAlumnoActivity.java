@@ -90,7 +90,7 @@ public class DetalleAlumnoActivity extends AppCompatActivity {
         listaFragments.add(fragmentUno);
         listaFragments.add(fragmentDos);
         listaFragments.add(fragmentTres);
-        adaptadorFragments = new AdaptadorFragments(getSupportFragmentManager(), 0, listaFragments);
+        adaptadorFragments = new AdaptadorFragments(getSupportFragmentManager(),  listaFragments);
         viewPager.setAdapter(adaptadorFragments);
     }
 
@@ -140,5 +140,14 @@ public class DetalleAlumnoActivity extends AppCompatActivity {
         }
 
         return true;
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (viewPager.getCurrentItem() == 0) {
+            super.onBackPressed();
+        } else {
+            viewPager.setCurrentItem(viewPager.getCurrentItem() - 1);
+        }
     }
 }

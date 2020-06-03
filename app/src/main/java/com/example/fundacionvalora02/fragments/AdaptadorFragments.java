@@ -13,8 +13,8 @@ public class AdaptadorFragments extends FragmentPagerAdapter {
     private ArrayList<Fragment> lista_fragments;
     private String[] nombres = new String[]{"Detalles", "Saber Hacer", "Saber estar"};
 
-    public AdaptadorFragments(@NonNull FragmentManager fm, int behavior, ArrayList<Fragment> lista_fragments) {
-        super(fm, behavior);
+    public AdaptadorFragments(@NonNull FragmentManager fm, ArrayList<Fragment> lista_fragments) {
+        super(fm);
         this.lista_fragments = lista_fragments;
     }
 

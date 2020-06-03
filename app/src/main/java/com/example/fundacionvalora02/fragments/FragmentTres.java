@@ -1,15 +1,18 @@
 package com.example.fundacionvalora02.fragments;
 
+import android.app.Activity;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.Toast;
 
 import com.example.fundacionvalora02.R;
 import com.example.fundacionvalora02.dialogos.DialogoSemaforoSaberEstar;
@@ -51,6 +54,8 @@ public class FragmentTres extends Fragment implements DialogoSemaforoSaberEstar.
     DatabaseReference reference;
     DatabaseReference reference1;
 
+    Activity activity;
+
     public FragmentTres() {
 
     }
@@ -58,6 +63,7 @@ public class FragmentTres extends Fragment implements DialogoSemaforoSaberEstar.
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        activity = getActivity();
 
         if (getArguments() != null) {
             selected_alumno = (Alumno) getArguments().getSerializable(String.valueOf(R.string.TAG_SELECTED_ALUMNO));
@@ -83,41 +89,45 @@ public class FragmentTres extends Fragment implements DialogoSemaforoSaberEstar.
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for (DataSnapshot item : dataSnapshot.getChildren()) {
                     SemaforoSaberEstar semaforoSaberEstar = item.getValue(SemaforoSaberEstar.class);
+                    if ((getActivity() == null) || (getContext() == null)) {
+                        Log.w("Info", "Creado con exito");
+                    }
+                    else {
+                        if (semaforoSaberEstar.getId_alumno().equals(selected_alumno.getId())) {
+                            selected_semaforo_saber_estar = semaforoSaberEstar;
+                            selected_key_semaforo_saber_estar = item.getKey();
+                            int conseguido, en_proceso, no_conseguido, faltas, faltas_justificadas;
+                            conseguido = selected_semaforo_saber_estar.getConseguido();
+                            en_proceso = selected_semaforo_saber_estar.getEn_proceso();
+                            no_conseguido = selected_semaforo_saber_estar.getNo_conseguido();
+                            faltas = selected_semaforo_saber_estar.getFalta();
+                            faltas_justificadas = selected_semaforo_saber_estar.getFalta_justificada();
 
-                    if (semaforoSaberEstar.getId_alumno().equals(selected_alumno.getId())) {
-                        selected_semaforo_saber_estar = semaforoSaberEstar;
-                        selected_key_semaforo_saber_estar = item.getKey();
-                        int conseguido, en_proceso, no_conseguido, faltas, faltas_justificadas;
-                        conseguido = selected_semaforo_saber_estar.getConseguido();
-                        en_proceso = selected_semaforo_saber_estar.getEn_proceso();
-                        no_conseguido = selected_semaforo_saber_estar.getNo_conseguido();
-                        faltas = selected_semaforo_saber_estar.getFalta();
-                        faltas_justificadas = selected_semaforo_saber_estar.getFalta_justificada();
+                            int[] datos = {conseguido, en_proceso, no_conseguido, faltas, faltas_justificadas};
+                            String[] nombres_datos = {"Conseguido", "En Proceso", "No conseguido", "Faltas", "F.Justificadas"};
 
-                        int[] datos = {conseguido, en_proceso, no_conseguido, faltas, faltas_justificadas};
-                        String[] nombres_datos = {"Conseguido", "En Proceso", "No conseguido", "Faltas", "F.Justificadas"};
+                            List<PieEntry> pieEntries = new ArrayList<>();
+                            for (int i = 0; i < datos.length; i++) {
+                                pieEntries.add(new PieEntry(datos[i], nombres_datos[i]));
+                            }
 
-                        List<PieEntry> pieEntries = new ArrayList<>();
-                        for (int i = 0; i < datos.length; i++) {
-                            pieEntries.add(new PieEntry(datos[i], nombres_datos[i]));
+                            PieDataSet pieDataSet = new PieDataSet(pieEntries, "");
+                            pieDataSet.setColors(FragmentDos.COLORES_JULIO);
+                            pieDataSet.setValueTextSize(25);
+
+                            PieData pieData = new PieData(pieDataSet);
+
+                            Description description = new Description();
+                            description.setText(selected_alumno.getNombre() + " " + selected_alumno.getApellidos());
+                            description.setEnabled(true);
+                            description.setTextSize(30);
+
+                            pieChart.setDescription(description);
+                            pieChart.setBackgroundColor(getResources().getColor(R.color.light_white));
+
+                            pieChart.setData(pieData);
+                            pieChart.invalidate();
                         }
-
-                        PieDataSet pieDataSet = new PieDataSet(pieEntries, "");
-                        pieDataSet.setColors(FragmentDos.COLORES_JULIO);
-                        pieDataSet.setValueTextSize(25);
-
-                        PieData pieData = new PieData(pieDataSet);
-
-                        Description description = new Description();
-                        description.setText(selected_alumno.getNombre() + " " + selected_alumno.getApellidos());
-                        description.setEnabled(true);
-                        description.setTextSize(30);
-
-                        pieChart.setDescription(description);
-                        pieChart.setBackgroundColor(getResources().getColor(R.color.light_white));
-
-                        pieChart.setData(pieData);
-                        pieChart.invalidate();
                     }
                 }
             }

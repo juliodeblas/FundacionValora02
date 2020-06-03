@@ -1,15 +1,18 @@
 package com.example.fundacionvalora02.fragments;
 
+import android.app.Activity;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.Toast;
 
 import com.example.fundacionvalora02.R;
 import com.example.fundacionvalora02.dialogos.DialogoSemaforoSaberHacer;
@@ -46,7 +49,7 @@ public class FragmentDos extends Fragment implements DialogoSemaforoSaberHacer.O
     FirebaseDatabase database;
     DatabaseReference reference;
     DatabaseReference reference1;
-
+    Activity activity;
     private Alumno selected_alumno;
     private String selected_key_alumno;
     private SemaforoSaberHacer selected_semaforo_saber_hacer;
@@ -59,12 +62,13 @@ public class FragmentDos extends Fragment implements DialogoSemaforoSaberHacer.O
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        activity = getActivity();
         if (getArguments() != null) {
             selected_alumno = (Alumno) getArguments().getSerializable(String.valueOf(R.string.TAG_SELECTED_ALUMNO));
             selected_key_alumno = getArguments().getString(String.valueOf(R.string.TAG_SELECTED_KEY_ALUMNO));
         }
     }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -72,7 +76,6 @@ public class FragmentDos extends Fragment implements DialogoSemaforoSaberHacer.O
         View view = inflater.inflate(R.layout.fragment_dos, container, false);
         pieChart = view.findViewById(R.id.piechart_semaforo_saber_hacer);
         imageButton = view.findViewById(R.id.imagebutton_semaforo_saber_hacer);
-
         database = FirebaseDatabase.getInstance();
         reference = database.getReference("semaforos_saber_hacer");
         Calendar calendar = Calendar.getInstance();
@@ -84,41 +87,46 @@ public class FragmentDos extends Fragment implements DialogoSemaforoSaberHacer.O
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for (DataSnapshot item : dataSnapshot.getChildren()) {
                     SemaforoSaberHacer semaforoSaberHacer = item.getValue(SemaforoSaberHacer.class);
+                    if ((getActivity() == null) || (getContext() == null)) {
+                        Log.w("Info", "Creado con exito");
+                    }
+                    else {
+                        if (semaforoSaberHacer.getId_alumno().equals(selected_alumno.getId())) {
+                            selected_key_semaforo_saber_hacer = item.getKey();
+                            selected_semaforo_saber_hacer = semaforoSaberHacer;
+                            int conseguido, en_proceso, no_conseguido, faltas, faltas_justificadas;
+                            conseguido = selected_semaforo_saber_hacer.getConseguido();
+                            en_proceso = selected_semaforo_saber_hacer.getEn_proceso();
+                            no_conseguido = selected_semaforo_saber_hacer.getNo_conseguido();
+                            faltas = selected_semaforo_saber_hacer.getFalta();
+                            faltas_justificadas = selected_semaforo_saber_hacer.getFalta_justificada();
 
-                    if (semaforoSaberHacer.getId_alumno().equals(selected_alumno.getId())) {
-                        selected_key_semaforo_saber_hacer = item.getKey();
-                        selected_semaforo_saber_hacer = semaforoSaberHacer;
-                        int conseguido, en_proceso, no_conseguido, faltas, faltas_justificadas;
-                        conseguido = selected_semaforo_saber_hacer.getConseguido();
-                        en_proceso = selected_semaforo_saber_hacer.getEn_proceso();
-                        no_conseguido = selected_semaforo_saber_hacer.getNo_conseguido();
-                        faltas = selected_semaforo_saber_hacer.getFalta();
-                        faltas_justificadas = selected_semaforo_saber_hacer.getFalta_justificada();
+                            int[] datos = {conseguido, en_proceso, no_conseguido, faltas, faltas_justificadas};
+                            String[] nombres_datos = {"Conseguido", "En proceso", "No conseguido", "Faltas", "F.Justicadas"};
 
-                        int[] datos = {conseguido, en_proceso, no_conseguido, faltas, faltas_justificadas};
-                        String[] nombres_datos = {"Conseguido", "En proceso", "No conseguido", "Faltas", "F.Justicadas"};
+                            List<PieEntry> pieEntries = new ArrayList<>();
+                            for (int i = 0; i < datos.length; i++) {
+                                pieEntries.add(new PieEntry(datos[i], nombres_datos[i]));
+                            }
 
-                        List<PieEntry> pieEntries = new ArrayList<>();
-                        for (int i = 0; i < datos.length; i++) {
-                            pieEntries.add(new PieEntry(datos[i], nombres_datos[i]));
+                            PieDataSet pieDataSet = new PieDataSet(pieEntries, "");
+                            pieDataSet.setColors(FragmentDos.COLORES_JULIO);
+                            pieDataSet.setValueTextSize(25);
+
+                            PieData pieData = new PieData(pieDataSet);
+
+                            Description description = new Description();
+                            description.setText(selected_alumno.getNombre() + " " + selected_alumno.getApellidos());
+                            description.setEnabled(true);
+                            description.setTextSize(30);
+                            pieChart.setBackgroundColor(getResources().getColor(R.color.light_white));
+                            pieChart.setDescription(description);
+
+
+                            pieChart.setData(pieData);
+                            pieChart.invalidate();
                         }
 
-                        PieDataSet pieDataSet = new PieDataSet(pieEntries, "");
-                        pieDataSet.setColors(FragmentDos.COLORES_JULIO);
-                        pieDataSet.setValueTextSize(25);
-
-                        PieData pieData = new PieData(pieDataSet);
-
-                        Description description = new Description();
-                        description.setText(selected_alumno.getNombre() + " " + selected_alumno.getApellidos());
-                        description.setEnabled(true);
-                        description.setTextSize(30);
-
-                        pieChart.setDescription(description);
-                        pieChart.setBackgroundColor(getResources().getColor(R.color.light_white));
-
-                        pieChart.setData(pieData);
-                        pieChart.invalidate();
                     }
                 }
             }
