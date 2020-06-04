@@ -8,6 +8,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -50,7 +51,7 @@ public class SecondActivity extends AppCompatActivity implements DialogoAlumnoCr
     Bundle bundle;
     TextView text_alumnos_modulo;
     RecyclerView recycler_alumnos;
-    Button button_crear, button_actualizar, button_eliminar;
+    Button button_crear, button_actualizar;
     Toolbar toolbar;
 
     public static String selected_key_modulo;
@@ -61,6 +62,7 @@ public class SecondActivity extends AppCompatActivity implements DialogoAlumnoCr
     DatabaseReference databaseReference1;
     DatabaseReference databaseReference2;
     Query query;
+
 
     FirebaseRecyclerOptions<Alumno> options;
     FirebaseRecyclerAdapter<Alumno, MyRecyclerViewHolder2> adapter;
@@ -167,60 +169,6 @@ public class SecondActivity extends AppCompatActivity implements DialogoAlumnoCr
                 }
             }
         });
-        button_eliminar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (selected_alumno != null) {
-                    AlertDialog.Builder dialog = new AlertDialog.Builder(SecondActivity.this);
-                    dialog.setTitle("Confirmar eliminación. ");
-                    dialog.setMessage("¿Seguro que quieres continuar?");
-                    dialog.setPositiveButton("SI", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            AlertDialog.Builder dialog1 = new AlertDialog.Builder(SecondActivity.this);
-                            dialog1.setTitle("¿Estás realmente seguro que quieres continuar?");
-                            dialog1.setMessage("Se eliminarán también los semáforos asociados al alumno.");
-                            dialog1.setPositiveButton("SI", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    databaseReference.child(selected_key_alumno).removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
-                                        @Override
-                                        public void onSuccess(Void aVoid) {
-                                            Toast.makeText(SecondActivity.this, "¡Borrado correctamente!", Toast.LENGTH_SHORT).show();
-
-
-                                        }
-                                    }).addOnFailureListener(new OnFailureListener() {
-                                        @Override
-                                        public void onFailure(@NonNull Exception e) {
-                                            Toast.makeText(SecondActivity.this, "" + e.getMessage(), Toast.LENGTH_SHORT).show();
-                                        }
-                                    });
-                                }
-                            }).setNegativeButton("NO", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-
-                                }
-                            });
-                            dialog1.create();
-                            dialog1.show();
-                        }
-                    }).setNegativeButton("NO", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-
-                        }
-                    });
-                    dialog.create();
-                    dialog.show();
-                } else {
-                    Toast.makeText(getApplicationContext(), "Debe seleccionar un alumno.", Toast.LENGTH_SHORT).show();
-                }
-
-            }
-
-        });
 
         selected_key_alumno = "null";
         selected_alumno = null;
@@ -233,7 +181,7 @@ public class SecondActivity extends AppCompatActivity implements DialogoAlumnoCr
         recycler_alumnos.setLayoutManager(new LinearLayoutManager(this));
         button_crear = findViewById(R.id.button_crear_alumno);
         button_actualizar = findViewById(R.id.button_actualizar_alumno);
-        button_eliminar = findViewById(R.id.button_eliminar_alumno);
+
         toolbar = findViewById(R.id.toolbar_second);
         setSupportActionBar(toolbar);
 
@@ -278,8 +226,8 @@ public class SecondActivity extends AppCompatActivity implements DialogoAlumnoCr
                     public void onClick(View view, int position) {
                         final AlertDialog.Builder builder = new AlertDialog.Builder(SecondActivity.this);
                         builder.setTitle("¿Qué quieres hacer?");
-                        builder.setMessage("Si-Ver detalles del alumno \nNo-Continuar en esta pantalla");
-                        builder.setPositiveButton("SI", new DialogInterface.OnClickListener() {
+                        builder.setMessage("CONTINUAR - Ver detalles del alumno \nELIMINAR - Eliminar alumno\nCANCEL - Continuar en esta pantalla");
+                        builder.setPositiveButton("CONTINUAR", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 Intent intent = new Intent(SecondActivity.this, DetalleAlumnoActivity.class);
@@ -288,7 +236,58 @@ public class SecondActivity extends AppCompatActivity implements DialogoAlumnoCr
                                 startActivity(intent);
                             }
                         });
-                        builder.setNegativeButton("NO", new DialogInterface.OnClickListener() {
+                        builder.setNegativeButton("ELIMINAR", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                if (selected_alumno != null) {
+                                    AlertDialog.Builder dialogo = new AlertDialog.Builder(SecondActivity.this);
+                                    dialogo.setTitle("Confirmar eliminación.");
+                                    dialogo.setMessage("¿Seguro que quieres continuar?");
+                                    dialogo.setPositiveButton("SI", new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            AlertDialog.Builder dialog1 = new AlertDialog.Builder(SecondActivity.this);
+                                            dialog1.setTitle("¿Estás realmente seguro que quieres continuar?");
+                                            dialog1.setMessage("Se eliminarán también los semáforos asociados al alumno.");
+                                            dialog1.setPositiveButton("SI", new DialogInterface.OnClickListener() {
+                                                @Override
+                                                public void onClick(DialogInterface dialog, int which) {
+                                                    databaseReference.child(selected_key_alumno).removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                        @Override
+                                                        public void onSuccess(Void aVoid) {
+                                                            Toast.makeText(SecondActivity.this, "¡Borrado correctamente!", Toast.LENGTH_SHORT).show();
+
+
+                                                        }
+                                                    }).addOnFailureListener(new OnFailureListener() {
+                                                        @Override
+                                                        public void onFailure(@NonNull Exception e) {
+                                                            Toast.makeText(SecondActivity.this, "" + e.getMessage(), Toast.LENGTH_SHORT).show();
+                                                        }
+                                                    });
+                                                }
+                                            }).setNegativeButton("NO", new DialogInterface.OnClickListener() {
+                                                @Override
+                                                public void onClick(DialogInterface dialog, int which) {
+
+                                                }
+                                            });
+                                            dialog1.create();
+                                            dialog1.show();
+                                        }
+                                    }).setNegativeButton("NO", new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
+
+                                        }
+                                    });
+                                    dialogo.create();
+                                    dialogo.show();
+                                } else {
+                                    Toast.makeText(getApplicationContext(), "Debe seleccionar un alumno.", Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                        });
+                        builder.setNeutralButton("CANCEL", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
 

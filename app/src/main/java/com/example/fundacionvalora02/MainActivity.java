@@ -39,13 +39,14 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+
 import java.util.Random;
 
 public class MainActivity extends AppCompatActivity {
 
     RecyclerView recycler_view;
     EditText edit_nombre, edit_curso;
-    Button button_crear, button_eliminar;
+    Button button_crear;
 
     FirebaseDatabase firebaseDatabase;
     DatabaseReference databaseReference;
@@ -198,7 +199,6 @@ public class MainActivity extends AppCompatActivity {
         edit_nombre = findViewById(R.id.edit_nombre);
         edit_curso = findViewById(R.id.edit_curso);
         button_crear = findViewById(R.id.button_crear);
-        button_eliminar = findViewById(R.id.button_eliminar);
         toolbar = findViewById(R.id.toolbar_main);
         setSupportActionBar(toolbar);
 
@@ -229,60 +229,6 @@ public class MainActivity extends AppCompatActivity {
                 } else {
                     Toast.makeText(getApplicationContext(), "Debe introducir todos los datos.", Toast.LENGTH_SHORT).show();
                 }
-            }
-        });
-
-        button_eliminar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (selected_modulo != null) {
-                    AlertDialog.Builder dialog = new AlertDialog.Builder(MainActivity.this);
-                    dialog.setTitle("Confirmar eliminación.");
-                    dialog.setMessage("¿Seguro que quieres continuar?");
-                    dialog.setPositiveButton("SI", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            AlertDialog.Builder dialog1 = new AlertDialog.Builder(MainActivity.this);
-                            dialog1.setTitle("¿Estás realmente seguro que quieres continuar?");
-                            dialog1.setMessage("Se eliminarán también los alumnos y semáforos asociados al módulo.");
-                            dialog1.setPositiveButton("SI", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    databaseReference.child(selected_key_modulo).removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
-                                        @Override
-                                        public void onSuccess(Void aVoid) {
-                                            Toast.makeText(MainActivity.this, "¡Borrado correctamente!", Toast.LENGTH_SHORT).show();
-                                        }
-                                    }).addOnFailureListener(new OnFailureListener() {
-                                        @Override
-                                        public void onFailure(@NonNull Exception e) {
-                                            Toast.makeText(MainActivity.this, "" + e.getMessage(), Toast.LENGTH_SHORT).show();
-                                        }
-                                    });
-                                }
-                            }).setNegativeButton("NO", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-
-                                }
-                            });
-                            dialog1.create();
-                            dialog1.show();
-                        }
-                    }).setNegativeButton("NO", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-
-                        }
-                    });
-
-
-                    dialog.create();
-                    dialog.show();
-                } else {
-                    Toast.makeText(getApplicationContext(), "Debe seleccionar un módulo.", Toast.LENGTH_SHORT).show();
-                }
-
             }
         });
 
@@ -317,8 +263,8 @@ public class MainActivity extends AppCompatActivity {
 
                         final AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
                         builder.setTitle("¿Qué quieres hacer?");
-                        builder.setMessage("Si-Ver alumnos del módulo \nNo-Continuar en esta pantalla");
-                        builder.setPositiveButton("SI", new DialogInterface.OnClickListener() {
+                        builder.setMessage("CONTINUAR - Ver alumnos del módulo \nELIMINAR - Eliminar módulo\nCANCEL - Continuar en esta pantalla");
+                        builder.setPositiveButton("CONTINUAR", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 Intent intent = new Intent(MainActivity.this, SecondActivity.class);
@@ -327,7 +273,56 @@ public class MainActivity extends AppCompatActivity {
                                 startActivity(intent);
                             }
                         });
-                        builder.setNegativeButton("NO", new DialogInterface.OnClickListener() {
+                        builder.setNegativeButton("ELIMINAR", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                AlertDialog.Builder builder2 = new AlertDialog.Builder(MainActivity.this);
+                                builder2.setTitle("Confirmar eliminación.");
+                                builder2.setMessage("¿Seguro que quieres continuar?");
+                                builder2.setPositiveButton("SI", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        AlertDialog.Builder dialog1 = new AlertDialog.Builder(MainActivity.this);
+                                        dialog1.setTitle("¿Estás realmente seguro que quieres continuar?");
+                                        dialog1.setMessage("Se eliminarán también los alumnos y semáforos asociados al módulo.");
+                                        dialog1.setPositiveButton("SI", new DialogInterface.OnClickListener() {
+                                            @Override
+                                            public void onClick(DialogInterface dialog, int which) {
+                                                databaseReference.child(selected_key_modulo).removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                    @Override
+                                                    public void onSuccess(Void aVoid) {
+                                                        Toast.makeText(MainActivity.this, "¡Borrado correctamente!", Toast.LENGTH_SHORT).show();
+                                                    }
+                                                }).addOnFailureListener(new OnFailureListener() {
+                                                    @Override
+                                                    public void onFailure(@NonNull Exception e) {
+                                                        Toast.makeText(MainActivity.this, "" + e.getMessage(), Toast.LENGTH_SHORT).show();
+                                                    }
+                                                });
+                                            }
+                                        }).setNegativeButton("NO", new DialogInterface.OnClickListener() {
+                                            @Override
+                                            public void onClick(DialogInterface dialog, int which) {
+
+                                            }
+                                        });
+
+                                        dialog1.create();
+                                        dialog1.show();
+                                    }
+                                });
+                                builder2.setNegativeButton("NO", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+
+                                    }
+                                });
+                                builder2.create();
+                                builder2.show();
+                                adapter.notifyDataSetChanged();
+                            }
+                        });
+                        builder.setNeutralButton("CANCEL", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
 
