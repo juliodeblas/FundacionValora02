@@ -135,6 +135,7 @@ public class DetalleAlumnoActivity extends AppCompatActivity {
                 break;
             case R.id.menu_calendario_others:
                 Intent intent2 = new Intent(DetalleAlumnoActivity.this, CalendarActivity.class);
+                intent2.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent2);
                 break;
         }
