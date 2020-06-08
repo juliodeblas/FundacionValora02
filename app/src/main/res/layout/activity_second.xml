@@ -4,25 +4,25 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/fondo_libros"
     android:orientation="vertical"
-    tools:context=".SecondActivity"
-    android:background="@drawable/fondo_libros">
+    tools:context=".SecondActivity">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar_second"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/colorPrimary"
-        app:titleTextColor="@color/blanco"
         android:scrollbarAlwaysDrawVerticalTrack="true"
-        android:scrollbarStyle="insideOverlay"></androidx.appcompat.widget.Toolbar>
+        android:scrollbarStyle="insideOverlay"
+        app:titleTextColor="@color/blanco"></androidx.appcompat.widget.Toolbar>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
         android:layout_margin="5dp"
-        android:background="@color/light_white">
+        android:background="@color/light_white"
+        android:orientation="vertical">
 
         <TextView
             android:id="@+id/text_alumnos_modulo"
@@ -35,9 +35,37 @@
             android:gravity="center|left"
             android:padding="10dp"
             android:text="Alumnos del modulo: "
-            android:textSize="15dp"
-            android:textColor="@color/negro"></TextView>
+            android:textColor="@color/negro"
+            android:textSize="15dp"></TextView>
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.85"
+                android:text="Pasar lista a todo el módulo:"
+                android:textSize="17dp"
+                android:padding="15dp"
+                android:textColor="@color/negro"
+                android:background="@drawable/rounded_item_rojo"
+                android:layout_marginLeft="10dp"></TextView>
+
+            <Button
+                android:id="@+id/button_pasar_lista"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.15"
+                android:layout_gravity="center"
+                android:layout_marginLeft="10dp"
+                android:background="@drawable/ic_check"
+                android:gravity="center"
+                android:layout_marginRight="10dp"></Button>
+
+        </LinearLayout>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler_second"
@@ -58,20 +86,20 @@
                 android:id="@+id/button_crear_alumno"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginRight="30dp"
                 android:background="@drawable/rounded_item_azul"
                 android:text="CREAR"
-                android:textSize="25sp"
-                android:layout_marginRight="30dp"></Button>
+                android:textSize="25sp"></Button>
 
             <Button
                 android:id="@+id/button_actualizar_alumno"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="30dp"
                 android:background="@drawable/rounded_item_amarillo"
-                android:text="ACTUALIZAR"
                 android:padding="10dp"
-                android:textSize="25sp"
-                android:layout_marginLeft="30dp"></Button>
+                android:text="ACTUALIZAR"
+                android:textSize="20sp"></Button>
 
         </LinearLayout>
 

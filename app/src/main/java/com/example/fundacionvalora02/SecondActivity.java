@@ -51,7 +51,7 @@ public class SecondActivity extends AppCompatActivity implements DialogoAlumnoCr
     Bundle bundle;
     TextView text_alumnos_modulo;
     RecyclerView recycler_alumnos;
-    Button button_crear, button_actualizar;
+    Button button_crear, button_actualizar, button_pasar_lista;
     Toolbar toolbar;
 
     public static String selected_key_modulo;
@@ -61,6 +61,7 @@ public class SecondActivity extends AppCompatActivity implements DialogoAlumnoCr
     DatabaseReference databaseReference;
     DatabaseReference databaseReference1;
     DatabaseReference databaseReference2;
+    DatabaseReference databaseReference3;
     Query query;
 
 
@@ -69,6 +70,8 @@ public class SecondActivity extends AppCompatActivity implements DialogoAlumnoCr
 
     public static Alumno selected_alumno;
     public static String selected_key_alumno;
+
+    int conseguido;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -170,6 +173,96 @@ public class SecondActivity extends AppCompatActivity implements DialogoAlumnoCr
             }
         });
 
+        databaseReference.addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+            }
+
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+            }
+
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+        button_pasar_lista.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        for (DataSnapshot item : dataSnapshot.getChildren()) {
+                            Alumno alumno = item.getValue(Alumno.class);
+
+                            if (alumno.getId_modulo().equals(selected_modulo.getId())) {
+                                databaseReference1.addListenerForSingleValueEvent(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                        for (DataSnapshot item2 : dataSnapshot.getChildren()) {
+                                            SemaforoSaberHacer semaforo = item2.getValue(SemaforoSaberHacer.class);
+
+                                            if (semaforo.getId_alumno().equals(alumno.getId())) {
+                                                String key = item2.getKey();
+                                                conseguido = semaforo.getConseguido();
+                                                semaforo.setConseguido(conseguido + 1);
+                                                databaseReference1.child(key).setValue(semaforo);
+                                            }
+                                        }
+                                    }
+
+                                    @Override
+                                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                                    }
+                                });
+                                databaseReference2.addListenerForSingleValueEvent(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                        for (DataSnapshot item3 : dataSnapshot.getChildren()) {
+                                            SemaforoSaberEstar semaforo = item3.getValue(SemaforoSaberEstar.class);
+
+                                            if (semaforo.getId_alumno().equals(alumno.getId())) {
+                                                String key = item3.getKey();
+                                                conseguido = semaforo.getConseguido();
+                                                semaforo.setConseguido(conseguido + 1);
+                                                databaseReference2.child(key).setValue(semaforo);
+                                            }
+                                        }
+                                    }
+
+                                    @Override
+                                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                                    }
+                                });
+                                Toast.makeText(SecondActivity.this, alumno.getNombre() + " " + alumno.getApellidos() + " actualizado con éxito", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
+            }
+        });
+
         selected_key_alumno = "null";
         selected_alumno = null;
         displayAlumno();
@@ -181,6 +274,7 @@ public class SecondActivity extends AppCompatActivity implements DialogoAlumnoCr
         recycler_alumnos.setLayoutManager(new LinearLayoutManager(this));
         button_crear = findViewById(R.id.button_crear_alumno);
         button_actualizar = findViewById(R.id.button_actualizar_alumno);
+        button_pasar_lista = findViewById(R.id.button_pasar_lista);
 
         toolbar = findViewById(R.id.toolbar_second);
         setSupportActionBar(toolbar);
@@ -195,6 +289,7 @@ public class SecondActivity extends AppCompatActivity implements DialogoAlumnoCr
         query = databaseReference.orderByChild("id_modulo").equalTo(selected_modulo.getId());
         databaseReference1 = firebaseDatabase.getReference().child("semaforos_saber_hacer");
         databaseReference2 = firebaseDatabase.getReference().child("semaforos_saber_estar");
+        databaseReference3 = firebaseDatabase.getReference().child("modulos");
 
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
