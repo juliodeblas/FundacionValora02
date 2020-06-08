@@ -284,4 +284,9 @@ public class CalendarActivity extends AppCompatActivity implements DialogoEvento
 
         return true;
     }
+
+    @Override
+    public void onBackPressed() {
+        
+    }
 }
