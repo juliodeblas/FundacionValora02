@@ -272,6 +272,9 @@ public class MainActivity extends AppCompatActivity implements DialogoSpinner.On
         databaseReference.push().setValue(modulo);
 
         adapter.notifyDataSetChanged();
+
+        edit_curso.setText("");
+        edit_nombre.setText("");
     }
 
     private void displayModulo() {
@@ -361,8 +364,8 @@ public class MainActivity extends AppCompatActivity implements DialogoSpinner.On
                         selected_key_modulo = getSnapshots().getSnapshot(position).getKey();
                         Log.d("Key item", "" + selected_key_modulo);
 
-                        edit_nombre.setText(model.getNombre());
-                        edit_curso.setText(model.getCurso());
+                        edit_nombre.setText("");
+                        edit_curso.setText("");
                     }
                 });
             }
@@ -461,6 +464,8 @@ public class MainActivity extends AppCompatActivity implements DialogoSpinner.On
 
             }
         });
+        edit_curso.setText("");
+        edit_nombre.setText("");
 
         adapter.notifyDataSetChanged();
     }
