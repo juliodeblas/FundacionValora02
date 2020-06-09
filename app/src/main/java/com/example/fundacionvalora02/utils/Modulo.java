@@ -39,4 +39,9 @@ public class Modulo implements Serializable {
     public void setId(String id) {
         this.id = id;
     }
+
+    @Override
+    public String toString() {
+        return nombre + " - " + curso + " - ID: " + id;
+    }
 }

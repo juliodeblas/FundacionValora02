@@ -203,63 +203,78 @@ public class SecondActivity extends AppCompatActivity implements DialogoAlumnoCr
         button_pasar_lista.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+                AlertDialog.Builder builder = new AlertDialog.Builder(SecondActivity.this);
+                builder.setTitle("¿Estas seguro que quieres continuar?");
+                builder.setMessage("Se añadirá un 'conseguido' a todos los alumnos del módulo.");
+                builder.setPositiveButton("SI", new DialogInterface.OnClickListener() {
                     @Override
-                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        for (DataSnapshot item : dataSnapshot.getChildren()) {
-                            Alumno alumno = item.getValue(Alumno.class);
+                    public void onClick(DialogInterface dialog, int which) {
+                        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                for (DataSnapshot item : dataSnapshot.getChildren()) {
+                                    Alumno alumno = item.getValue(Alumno.class);
 
-                            if (alumno.getId_modulo().equals(selected_modulo.getId())) {
-                                databaseReference1.addListenerForSingleValueEvent(new ValueEventListener() {
-                                    @Override
-                                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                        for (DataSnapshot item2 : dataSnapshot.getChildren()) {
-                                            SemaforoSaberHacer semaforo = item2.getValue(SemaforoSaberHacer.class);
+                                    if (alumno.getId_modulo().equals(selected_modulo.getId())) {
+                                        databaseReference1.addListenerForSingleValueEvent(new ValueEventListener() {
+                                            @Override
+                                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                                for (DataSnapshot item2 : dataSnapshot.getChildren()) {
+                                                    SemaforoSaberHacer semaforo = item2.getValue(SemaforoSaberHacer.class);
 
-                                            if (semaforo.getId_alumno().equals(alumno.getId())) {
-                                                String key = item2.getKey();
-                                                conseguido = semaforo.getConseguido();
-                                                semaforo.setConseguido(conseguido + 1);
-                                                databaseReference1.child(key).setValue(semaforo);
+                                                    if (semaforo.getId_alumno().equals(alumno.getId())) {
+                                                        String key = item2.getKey();
+                                                        conseguido = semaforo.getConseguido();
+                                                        semaforo.setConseguido(conseguido + 1);
+                                                        databaseReference1.child(key).setValue(semaforo);
+                                                    }
+                                                }
                                             }
-                                        }
-                                    }
 
-                                    @Override
-                                    public void onCancelled(@NonNull DatabaseError databaseError) {
+                                            @Override
+                                            public void onCancelled(@NonNull DatabaseError databaseError) {
 
-                                    }
-                                });
-                                databaseReference2.addListenerForSingleValueEvent(new ValueEventListener() {
-                                    @Override
-                                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                        for (DataSnapshot item3 : dataSnapshot.getChildren()) {
-                                            SemaforoSaberEstar semaforo = item3.getValue(SemaforoSaberEstar.class);
-
-                                            if (semaforo.getId_alumno().equals(alumno.getId())) {
-                                                String key = item3.getKey();
-                                                conseguido = semaforo.getConseguido();
-                                                semaforo.setConseguido(conseguido + 1);
-                                                databaseReference2.child(key).setValue(semaforo);
                                             }
-                                        }
-                                    }
+                                        });
+                                        databaseReference2.addListenerForSingleValueEvent(new ValueEventListener() {
+                                            @Override
+                                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                                for (DataSnapshot item3 : dataSnapshot.getChildren()) {
+                                                    SemaforoSaberEstar semaforo = item3.getValue(SemaforoSaberEstar.class);
 
-                                    @Override
-                                    public void onCancelled(@NonNull DatabaseError databaseError) {
+                                                    if (semaforo.getId_alumno().equals(alumno.getId())) {
+                                                        String key = item3.getKey();
+                                                        conseguido = semaforo.getConseguido();
+                                                        semaforo.setConseguido(conseguido + 1);
+                                                        databaseReference2.child(key).setValue(semaforo);
+                                                    }
+                                                }
+                                            }
 
+                                            @Override
+                                            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                                            }
+                                        });
+                                        Toast.makeText(SecondActivity.this, alumno.getNombre() + " " + alumno.getApellidos() + " actualizado con éxito", Toast.LENGTH_SHORT).show();
                                     }
-                                });
-                                Toast.makeText(SecondActivity.this, alumno.getNombre() + " " + alumno.getApellidos() + " actualizado con éxito", Toast.LENGTH_SHORT).show();
+                                }
                             }
-                        }
-                    }
 
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                            }
+                        });
+                    }
+                }).setNegativeButton("NO", new DialogInterface.OnClickListener() {
                     @Override
-                    public void onCancelled(@NonNull DatabaseError databaseError) {
+                    public void onClick(DialogInterface dialog, int which) {
 
                     }
                 });
+                builder.create();
+                builder.show();
             }
         });
 

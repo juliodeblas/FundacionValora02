@@ -22,6 +22,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.fundacionvalora02.dialogos.DialogoSpinner;
 import com.example.fundacionvalora02.recycler_main.MyRecyclerViewHolder;
 import com.example.fundacionvalora02.recycler_main.itemClickListener;
 import com.example.fundacionvalora02.utils.Alumno;
@@ -40,9 +41,12 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.DateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Random;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements DialogoSpinner.OnDialogoSpinnerListener {
 
     RecyclerView recycler_view;
     EditText edit_nombre, edit_curso;
@@ -202,7 +206,6 @@ public class MainActivity extends AppCompatActivity {
         toolbar = findViewById(R.id.toolbar_main);
         setSupportActionBar(toolbar);
 
-
         firebaseDatabase = FirebaseDatabase.getInstance();
         databaseReference = firebaseDatabase.getReference("modulos");
         databaseReference1 = firebaseDatabase.getReference("alumnos");
@@ -225,7 +228,29 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (!edit_nombre.getText().toString().matches("") && !edit_curso.getText().toString().matches("")) {
-                    crearModulo();
+                    if (adapter.getItemCount() > 0) {
+                        AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+                        builder.setTitle("Elija una opción.");
+                        builder.setMessage("¿Quiere importar alumnos de otros módulos?");
+                        builder.setPositiveButton("SI", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                DialogoSpinner dialogoSpinner = new DialogoSpinner();
+                                dialogoSpinner.show(getSupportFragmentManager(), "spinner");
+                            }
+                        }).setNegativeButton("NO", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                crearModulo();
+                            }
+                        });
+                        builder.create();
+                        builder.show();
+                    } else {
+                        crearModulo();
+                    }
+
+                    adapter.notifyDataSetChanged();
                 } else {
                     Toast.makeText(getApplicationContext(), "Debe introducir todos los datos.", Toast.LENGTH_SHORT).show();
                 }
@@ -390,5 +415,53 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return builder.toString();
+    }
+
+    @Override
+    public void onSpinnerSelected(Modulo modulo) {
+        String nombre = edit_nombre.getText().toString();
+        String curso = edit_curso.getText().toString();
+        String id = generadorAlfanumerico(10);
+
+        Modulo modulo1 = new Modulo(nombre, curso, id);
+
+        databaseReference.push().setValue(modulo1);
+
+        adapter.notifyDataSetChanged();
+
+        databaseReference1.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot item : dataSnapshot.getChildren()) {
+                    Alumno alumno = item.getValue(Alumno.class);
+                    if (alumno.getId_modulo().equals(modulo.getId())) {
+                        String nombre = alumno.getNombre();
+                        String apellidos = alumno.getApellidos();
+                        String numero = alumno.getNumero_orden();
+                        String perfil = alumno.getPerfil();
+                        String grupo = alumno.getGrupo();
+                        String id_modulo = id;
+                        String id = generadorAlfanumerico(10);
+                        Calendar calendar = Calendar.getInstance();
+                        String fecha = DateFormat.getDateInstance().format(calendar.getTime());
+
+                        Alumno alumno1 = new Alumno(nombre, apellidos, numero, perfil, grupo, id_modulo, id);
+                        SemaforoSaberHacer semaforoSaberHacer = new SemaforoSaberHacer(0, 0, 0, 0, 0, id, fecha);
+                        SemaforoSaberEstar semaforoSaberEstar = new SemaforoSaberEstar(0, 0, 0, 0, 0, id, fecha);
+
+                        databaseReference1.push().setValue(alumno1);
+                        databaseReference2.push().setValue(semaforoSaberHacer);
+                        databaseReference3.push().setValue(semaforoSaberEstar);
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+        adapter.notifyDataSetChanged();
     }
 }
